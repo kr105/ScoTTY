@@ -10,5 +10,15 @@ patch_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/libj
 patch_hash = c746b7b102de8f7660b9df30b2d68fd75dfbab45ed658eda257c1976e3371d2e
 wrapdb_version = 3.2.0-1
 
+# libjpeg-turbo rellena su constante BUILD con datetime.now(), en hora local, y
+# esa constante acaba dentro de la biblioteca (src/jcmaster.c:807). Como aquí
+# se enlaza estáticamente, se cuela en kitty.exe y rompe la reproducibilidad:
+# dos compilaciones en días distintos, o con distinta TZ cerca del cambio de
+# fecha, producen binarios diferentes.
+#
+# Lo detectó tools/verify-reproducible.sh, que varía la TZ entre las dos
+# compilaciones justamente para cazar este tipo de cosas.
+diff_files = libjpeg-turbo-reproducible-build.patch
+
 [provide]
 dependency_names = libjpeg, libturbojpeg

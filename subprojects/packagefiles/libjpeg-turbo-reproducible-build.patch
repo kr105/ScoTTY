@@ -1,0 +1,11 @@
+--- a/meson.build
++++ b/meson.build
+@@ -108,7 +108,7 @@
+ p = run_command(
+   python,
+   '-c',
+-  'import datetime; print(datetime.datetime.now().strftime("%Y%m%d"))',
++  'import datetime, os; e = os.environ.get("SOURCE_DATE_EPOCH"); print(datetime.datetime.fromtimestamp(int(e), datetime.timezone.utc).strftime("%Y%m%d") if e else "00000000")',
+   check: true,
+ )
+ cdata.set('BUILD', p.stdout().strip())
