@@ -193,7 +193,14 @@ putty_inc = include_directories(
 ################################################################################
 
 posix_regex_dep = dependency('posix_regex', fallback: ['musl-regex', 'posix_regex_dep'])
-libjpeg_dep     = dependency('libjpeg')
+
+# default_library=static o el subproyecto genera libjpeg-8.dll y los .exe salen
+# dependiendo de ella en runtime. Los binarios de ScoTTY se distribuyen sueltos,
+# sin instalador, así que todo va enlazado estáticamente.
+libjpeg_dep = dependency(
+  'libjpeg',
+  default_options: ['default_library=static'],
+)
 
 # Bibliotecas del sistema Win32. Unión de las que enlazaba cada .exe.
 win_libs = []
