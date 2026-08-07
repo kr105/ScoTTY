@@ -91,7 +91,6 @@ add_project_link_arguments(repro_link_args, language: 'c')
 
 kitty_mods = [
   'MOD_ADB',                 # integración con adb de Android
-  'MOD_BACKGROUNDIMAGE',     # imagen de fondo (necesita libjpeg)
   'MOD_DISABLEALTGR',        # desactivar AltGr
   'MOD_FAR2L',               # extensiones de terminal far2l
   'MOD_HYPERLINK',           # URLs clicables (necesita regex POSIX)
@@ -110,6 +109,18 @@ kitty_mods = [
   'MOD_WTS',                 # Windows Terminal Services
   'MOD_ZMODEM',              # transferencia ZMODEM
 ]
+
+# La imagen de fondo del terminal y las capturas de pantalla se guardan en
+# JPEG, y son lo único que hace que un cliente SSH acabe enlazando libjpeg
+# (~700 KB estáticos en kitty.exe). Se deja activada por defecto porque es una
+# funcionalidad de KiTTY de toda la vida, pero ahora se puede quitar:
+#
+#   meson setup build --cross-file cross/x86_64-w64-mingw32.ini \
+#                     -Dbackground_image=false
+want_background_image = get_option('background_image')
+if want_background_image
+  kitty_mods += 'MOD_BACKGROUNDIMAGE'
+endif
 
 # Plataforma y compatibilidad. Se conservan tal cual estaban en CFLAGS.
 platform_defines = [
@@ -194,13 +205,19 @@ putty_inc = include_directories(
 
 posix_regex_dep = dependency('posix_regex', fallback: ['musl-regex', 'posix_regex_dep'])
 
+# Solo se descarga y compila si la imagen de fondo está activada.
+#
 # default_library=static o el subproyecto genera libjpeg-8.dll y los .exe salen
 # dependiendo de ella en runtime. Los binarios de ScoTTY se distribuyen sueltos,
 # sin instalador, así que todo va enlazado estáticamente.
-libjpeg_dep = dependency(
-  'libjpeg',
-  default_options: ['default_library=static'],
-)
+if want_background_image
+  libjpeg_dep = dependency(
+    'libjpeg',
+    default_options: ['default_library=static'],
+  )
+else
+  libjpeg_dep = declare_dependency()
+endif
 
 # Bibliotecas del sistema Win32. Unión de las que enlazaba cada .exe.
 win_libs = []

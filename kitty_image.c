@@ -4,21 +4,25 @@
 
 #include <setjmp.h>
 #include <stdio.h>
+
+#include <windows.h>
+
+#ifdef MOD_BACKGROUNDIMAGE
+
 /*
  * Antes esto era "jpeg/jpeglib.h", apuntando a las cabeceras que acompañaban
  * al jpeg/libjpeg.a precompilado del repositorio. Ahora libjpeg-turbo se
  * compila desde fuente como subproyecto de Meson y aporta sus propias
  * cabeceras, así que el include pasa a ser el normal de la biblioteca.
  *
+ * Va dentro del guard, no fuera: era lo único de este fichero que obligaba a
+ * tener libjpeg presente aunque la imagen de fondo estuviera desactivada.
+ *
  * jpeglib.h usa FILE en su API pero no incluye <stdio.h>, así que tiene que ir
  * después. La copia que había en el repositorio tampoco lo hacía; funcionaba
  * por casualidad del orden anterior.
  */
 #include <jpeglib.h>
-
-#include <windows.h>
-
-#ifdef MOD_BACKGROUNDIMAGE
 
 #include <math.h>
 #include "putty.h"
@@ -1379,6 +1383,23 @@ HBITMAP HWND_to_HBITMAP(HWND hWnd)
   return hbmMem;
 }
 
+/*
+ * Única función de la zona de capturas que necesita libjpeg: es la que
+ * codifica el bitmap a JPEG. Aislarla aquí permite desactivar la opción
+ * background_image sin tocar los sitios que llaman a screenCapture*, en
+ * kitty.c y windows/window.c.
+ */
+#ifndef MOD_BACKGROUNDIMAGE
+
+BOOL HBITMAP_to_JPG(HBITMAP hbm, LPCTSTR jpgfile, int quality)
+{
+  /* Compilado sin soporte JPEG: la captura falla en vez de escribir nada. */
+  (void)hbm; (void)jpgfile; (void)quality;
+  return 0;
+}
+
+#else
+
 BOOL HBITMAP_to_JPG(HBITMAP hbm, LPCTSTR jpgfile, int quality)
 {
   BITMAP      bm;
@@ -1461,6 +1482,8 @@ BOOL HBITMAP_to_JPG(HBITMAP hbm, LPCTSTR jpgfile, int quality)
   fclose(fp);
   return 1;
 }
+
+#endif /* MOD_BACKGROUNDIMAGE */
 
 void MakeScreenShot() {
 HBITMAP hbm = HWND_to_HBITMAP(GetDesktopWindow());

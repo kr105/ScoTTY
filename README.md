@@ -67,9 +67,25 @@ step and nothing to install on Windows.
 The six executables land in `build/0.76b_My_PuTTY/windows/`: `kitty.exe`,
 `klink.exe`, `kscp.exe`, `ksftp.exe`, `kageant.exe` and `kittygen.exe`.
 
+The executables are self-contained: everything is linked statically, so there
+are no DLLs to ship alongside them.
+
 External libraries are not vendored as binaries. `libjpeg-turbo` and the POSIX
 regex implementation are fetched from source and pinned by SHA256 in
 `subprojects/*.wrap`, so the whole dependency chain is auditable.
+
+### Build options
+
+`libjpeg` is pulled in by exactly one feature: the JPEG terminal background
+image and the `/screenshot` command. Nothing in the SSH path needs it. If you
+would rather not carry a JPEG decoder in a terminal client, turn it off:
+
+    meson setup build --cross-file cross/x86_64-w64-mingw32.ini \
+                      -Dbackground_image=false
+
+That drops libjpeg entirely and takes about 750 KB off `kitty.exe`. The
+`/screenshot` command still exists but reports failure instead of writing a
+file. Other options are listed in `meson.options`.
 
 ### Running the tests
 

@@ -15,6 +15,15 @@ option(
 )
 
 option(
+  'background_image',
+  type: 'boolean',
+  value: true,
+  description: 'Imagen de fondo del terminal y capturas de pantalla en JPEG. ' +
+               'Es la única razón por la que un cliente SSH acaba enlazando ' +
+               'libjpeg; desactivarla elimina esa dependencia por completo.',
+)
+
+option(
   'tests',
   type: 'boolean',
   value: true,
