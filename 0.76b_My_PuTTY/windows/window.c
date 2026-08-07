@@ -443,7 +443,13 @@ int WINAPI Agent_WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show
 
 #endif
 #ifdef MOD_WTS
-typedef enum _WTS_VIRTUAL_CLASS { WTSVirtualClientData, WTSVirtualFileHandle } WTS_VIRTUAL_CLASS; 		// WTS_VIRTUAL_CLASS is not definned in file wtsapi32.h !!!
+/*
+ * Aquí había un typedef local de WTS_VIRTUAL_CLASS, porque el mingw32 antiguo
+ * no lo traía en wtsapi32.h. mingw-w64 sí lo define, y las dos declaraciones
+ * chocan. El build anterior lo resolvía comentando esta línea con un `sed -i`
+ * sobre este mismo fichero desde el target `cross` del makefile, lo que
+ * dejaba el árbol de fuentes modificado después de compilar.
+ */
 #include <wtsapi32.h>
 #endif
 #if (defined MOD_BACKGROUNDIMAGE) && (!defined FLJ)

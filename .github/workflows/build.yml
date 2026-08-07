@@ -1,0 +1,134 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+env:
+  # Instantánea inmutable del archivo de Debian. Es lo que hace que el build
+  # siga siendo reproducible dentro de dos años y no solo hoy: apuntar a
+  # "bookworm" a secas traería el toolchain que hubiera ese día.
+  #
+  # Para actualizar el toolchain, se cambia esta fecha en un commit propio y se
+  # comprueba que los hashes publicados cambian de forma esperada.
+  DEBIAN_SNAPSHOT: '20260501T000000Z'
+  # debian:bookworm-slim, fijada por digest y no por etiqueta.
+  DEBIAN_IMAGE: 'debian:bookworm-slim@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241'
+
+jobs:
+  build:
+    name: compilar y probar
+    runs-on: ubuntu-latest
+    container:
+      image: 'debian:bookworm-slim@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241'
+    steps:
+      - name: fijar apt a la instantánea de Debian
+        run: |
+          set -eux
+          printf 'deb [check-valid-until=no] https://snapshot.debian.org/archive/debian/%s bookworm main\n' "$DEBIAN_SNAPSHOT" > /etc/apt/sources.list
+          rm -f /etc/apt/sources.list.d/*
+          apt-get -o Acquire::Retries=5 update
+
+      - name: instalar toolchain
+        run: |
+          set -eux
+          apt-get -o Acquire::Retries=5 install -y --no-install-recommends \
+            ca-certificates curl git \
+            gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 mingw-w64-tools \
+            meson ninja-build python3 wine wine64
+          x86_64-w64-mingw32-gcc --version
+
+      - uses: actions/checkout@v4
+
+      - name: marcar el checkout como seguro para git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: configurar
+        run: |
+          meson setup build \
+            --cross-file cross/x86_64-w64-mingw32.ini \
+            --cross-file cross/wine.ini
+
+      - name: compilar
+        run: ninja -C build
+
+      - name: probar
+        env:
+          WINEDEBUG: '-all'
+        run: meson test -C build --print-errorlogs
+
+      - name: comprobar que el build no ha tocado el árbol de fuentes
+        # El build anterior hacía `sed -i` sobre window.c y version_major.txt,
+        # así que compilar dejaba el repositorio modificado. Esto lo impide.
+        run: git diff --exit-code
+
+      - name: recoger artefactos y hashes
+        run: |
+          set -eux
+          mkdir -p dist
+          cp build/0.76b_My_PuTTY/windows/*.exe dist/
+          cd dist
+          sha256sum *.exe | tee SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scotty-x86_64
+          path: dist/
+          if-no-files-found: error
+
+  reproducible:
+    name: verificar reproducibilidad
+    runs-on: ubuntu-latest
+    container:
+      image: 'debian:bookworm-slim@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241'
+    steps:
+      - name: fijar apt a la instantánea de Debian
+        run: |
+          set -eux
+          printf 'deb [check-valid-until=no] https://snapshot.debian.org/archive/debian/%s bookworm main\n' "$DEBIAN_SNAPSHOT" > /etc/apt/sources.list
+          rm -f /etc/apt/sources.list.d/*
+          apt-get -o Acquire::Retries=5 update
+
+      - name: instalar toolchain
+        run: |
+          set -eux
+          apt-get -o Acquire::Retries=5 install -y --no-install-recommends \
+            ca-certificates curl git tzdata \
+            gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 mingw-w64-tools \
+            meson ninja-build python3
+
+      - uses: actions/checkout@v4
+
+      - name: marcar el checkout como seguro para git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # Compila dos veces en rutas, zonas horarias, umasks y entornos distintos
+      # y compara los sha256. Falla si algún binario difiere. Es lo que
+      # convierte "reproducible" en una propiedad comprobada y no una promesa.
+      - name: compilar dos veces y comparar
+        run: tools/verify-reproducible.sh
+
+  attest:
+    name: procedencia
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      attestations: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: scotty-x86_64
+          path: dist
+
+      # Firma una declaración de procedencia SLSA ligada a este workflow y a
+      # este commit. Junto con el job de reproducibilidad, permite a un tercero
+      # recompilar y comprobar que obtiene exactamente estos binarios.
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: 'dist/*.exe'

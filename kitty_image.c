@@ -3,8 +3,18 @@
 #endif
 
 #include <setjmp.h>
-#include "jpeg/jpeglib.h"
 #include <stdio.h>
+/*
+ * Antes esto era "jpeg/jpeglib.h", apuntando a las cabeceras que acompañaban
+ * al jpeg/libjpeg.a precompilado del repositorio. Ahora libjpeg-turbo se
+ * compila desde fuente como subproyecto de Meson y aporta sus propias
+ * cabeceras, así que el include pasa a ser el normal de la biblioteca.
+ *
+ * jpeglib.h usa FILE en su API pero no incluye <stdio.h>, así que tiene que ir
+ * después. La copia que había en el repositorio tampoco lo hacía; funcionaba
+ * por casualidad del orden anterior.
+ */
+#include <jpeglib.h>
 
 #include <windows.h>
 

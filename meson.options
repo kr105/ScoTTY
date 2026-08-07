@@ -1,0 +1,22 @@
+option(
+  'master_password',
+  type: 'string',
+  value: 'ToBeDefined',
+  description: 'Clave de ofuscación de contraseñas guardadas (antes masterpassword.txt). ' +
+               'Es una constante de compilación, no un secreto: cualquiera con el binario puede extraerla.',
+)
+
+option(
+  'source_date_epoch',
+  type: 'string',
+  value: '',
+  description: 'Marca de tiempo UNIX fija para builds reproducibles. ' +
+               'Vacío = se toma de $SOURCE_DATE_EPOCH y, si no, de la fecha del último commit.',
+)
+
+option(
+  'tests',
+  type: 'boolean',
+  value: true,
+  description: 'Compila y registra los tests que corren en el host (no cross).',
+)

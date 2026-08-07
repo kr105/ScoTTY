@@ -1,0 +1,23 @@
+# POSIX regex (regcomp/regexec/regfree/regerror) para Windows.
+#
+# mingw-w64 no trae regex POSIX. KiTTY enlazaba históricamente un
+# regex/libregex.a opaco, compilado en 2016 y sin fuentes en el repo.
+#
+# Se sustituye por la implementación de musl (derivada de TRE), que da
+# semántica POSIX ERE real. Importa porque el patrón de detección de URLs es
+# configurable por el usuario (HyperlinkRegularExpression): un motor con
+# sintaxis distinta —PCRE, por ejemplo— cambiaría el comportamiento de los
+# patrones que la gente ya tenga guardados.
+#
+# Verificado idéntico a glibc sobre el patrón por defecto de urlhack,
+# incluida la extensión GNU \w. Ver test/regex_posix.c
+
+[wrap-file]
+directory       = musl-1.2.5
+source_url      = https://musl.libc.org/releases/musl-1.2.5.tar.gz
+source_filename = musl-1.2.5.tar.gz
+source_hash     = a9a118bbe84d8764da0ea0d28b3ab3fae8477fc7e4085d90102b8596fc7c75e4
+patch_directory = musl-regex
+
+[provide]
+posix_regex = posix_regex_dep

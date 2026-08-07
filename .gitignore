@@ -1,6 +1,18 @@
+# Directorios de build de Meson
+/build/
+/build-*/
+
+# Subproyectos descargados y su caché (pinneados en subprojects/*.wrap)
+/subprojects/*/
+!/subprojects/packagefiles/
+/subprojects/packagecache/
+
+# Artefactos de compilación
 *.o
-*.map
-*.exe
+*.obj
+*.a
 *.so
 *.dll
-/builds/
+*.exe
+*.map
+/subprojects/.wraplock

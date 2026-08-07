@@ -1,0 +1,13 @@
+/*
+ * Generado por Meson desde version.h.in. No editar.
+ *
+ * Antes lo producía el target `version:` del makefile, que además
+ * auto-incrementaba version_minor.txt en cada invocación: dos builds seguidos
+ * del mismo código daban versiones distintas. Ahora la versión sale de un
+ * único sitio, el campo version de project() en meson.build.
+ */
+#define RELEASE @RELEASE@
+#define TEXTVER "Release @RELEASE@"
+#define SSHVER "-Release-@RELEASE@"
+#define BINARY_VERSION @BINARY_VERSION@
+#define SOURCE_COMMIT "@SOURCE_COMMIT@"

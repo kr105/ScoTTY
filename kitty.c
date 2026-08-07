@@ -32,7 +32,6 @@
 #include "kitty_tools.h"
 #include "kitty_win.h"
 #include "kitty_launcher.h"
-#include "MD5check.h"
 /*************************************************
 ** FIN DE LA DEFINITION DES INCLUDES
 *************************************************/

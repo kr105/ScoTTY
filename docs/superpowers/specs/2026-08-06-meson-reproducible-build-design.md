@@ -115,13 +115,27 @@ comprueba con `git diff --exit-code` después de compilar.
 
 ## Libs externas
 
-- **regex** → **PCRE2**, capa `pcre2posix`. Expone `regcomp/regexec/regfree/regerror`,
-  las cuatro funciones que usan `kitty_regex.c` y `url/urlhack.c`.
-- **jpeg** → **libjpeg-turbo**, API-compatible con la IJG que espera `kitty_image.c`
-  (36 símbolos). Con SIMD desactivado para no arrastrar NASM.
+- **regex** → **implementación de musl** (derivada de TRE), no PCRE2.
+
+  PCRE2 era la opción inicial por estar en WrapDB, pero se descartó: el patrón
+  de detección de URLs es configurable por el usuario
+  (`HyperlinkRegularExpression`), y la capa POSIX de PCRE2 interpreta sintaxis
+  PCRE, no POSIX ERE. Los patrones ya guardados por los usuarios habrían
+  cambiado de comportamiento en silencio. WrapDB no tiene ningún regex POSIX,
+  así que musl se vendoriza con un `.wrap` propio que compila solo
+  `src/regex/` y aporta tres cabeceras de compatibilidad.
+
+  Verificado: idéntico a glibc en los ocho casos de `test/regex_posix.c`,
+  incluida la extensión GNU `\w` que usa el patrón por defecto.
+
+- **jpeg** → **libjpeg-turbo** desde WrapDB, API-compatible con la IJG que
+  espera `kitty_image.c` (36 símbolos).
 - **bcrypt** → `bcrypt/bcrypt.c` nuevo (ver abajo).
-- **base64, mini, blocnote, md5** → ya tienen fuentes completas en el repo; se
+- **base64, mini, blocnote** → ya tienen fuentes completas en el repo; se
   compilan desde ellas y se borran sus `.a`.
+- **md5** → no se compila. Sus dos únicos símbolos, `CheckMD5Integrity` y
+  `PrintConsole`, no se llaman desde ningún sitio; al ser una biblioteca
+  estática el enlazador ya extraía cero objetos de ella.
 
 ### Reimplementación de bcrypt
 
@@ -170,7 +184,20 @@ los targets `nohyperlink`, `zmodem`, `puttytel`, `psocks`, `testcrypt`, `notrans
 
 | Riesgo | Mitigación |
 |---|---|
-| Lista de fuentes mal reconstruida | Extraída de `make -n`, no a ojo; se compara binario por binario |
-| PCRE2 POSIX no equivalente a gnulib regex | Solo se usan 4 funciones POSIX; se verifica que `urlhack.c` y `kitty_regex.c` compilan y enlazan |
-| Contraseñas guardadas ilegibles | Aceptado; mitigado con cabecera mágica y error explícito |
-| Warnings nuevos con GCC 13 vs el GCC viejo del contenedor | No se usa `-Werror`; se documentan |
+| Lista de fuentes mal reconstruida | Extraída de `make -n`, no a ojo |
+| Regex nuevo no equivalente al anterior | `test/regex_posix.c` compara contra resultados de glibc sobre el patrón real |
+| Contraseñas guardadas ilegibles | Aceptado; mitigado con cabecera mágica y error explícito, cubierto por test |
+| Warnings nuevos con GCC 13 vs el GCC viejo del contenedor | No se usa `-Werror` |
+
+## Hallazgos durante la implementación
+
+Cosas que solo aparecieron al compilar de verdad, y cómo se resolvieron:
+
+| Hallazgo | Resolución |
+|---|---|
+| `window.c` declaraba `WTS_VIRTUAL_CLASS`, que mingw-w64 ya define. Era lo que el `sed -i` del makefile comentaba en cada build | Eliminado del fuente, con nota explicando por qué estaba |
+| GCC 10 cambió a `-fno-common`; el código declara ~30 símbolos en cabeceras sin `extern` | `-fcommon` a nivel de proyecto. Arreglarlo de verdad es un cambio de código, no de build |
+| `kitty_ini.h` y `kitty_help.h` los generaba el makefile con `sed`, escribiéndolos dentro del árbol de fuentes | `tools/gen-text-header.py` + `custom_target`, salida al directorio de build |
+| `blocnote` parecía código muerto en el análisis de símbolos | Falso negativo: `nm` reporta `Notepad_WinMain@16` decorado y la búsqueda incluía el `@16`. `window.c:1256` sí lo llama. Se compila, con `-DNOMAIN` |
+| `notepad.rc` entra en `putty.res.o` vía `putty-common.rc2:232`, y necesitaba `res/bille.ico`, borrado en la limpieza anterior | Restaurado. La verificación de iconos se rehízo preprocesando los `.rc`, que es lo que sigue los `#include` |
+| `jpeglib.h` usa `FILE` sin incluir `<stdio.h>` | El include se movió detrás de `<stdio.h>` en `kitty_image.c` |
