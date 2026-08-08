@@ -52,4 +52,32 @@ fi
 echo "NO REPRODUCIBLE: los hashes difieren"
 echo
 diff <(echo "$a") <(echo "$b") || true
+
+# Un .exe distinto no dice de dónde viene la diferencia. Se baja al nivel de
+# objeto para señalar el origen: si los que difieren están todos bajo
+# subprojects/, el problema son las banderas que Meson no propaga a los
+# subproyectos; si están repartidos, es algo global del proyecto.
+echo
+echo "--- objetos que difieren entre las dos compilaciones ---"
+differing=0
+while IFS= read -r rel; do
+    if ! cmp -s "$work/a/build/$rel" "$work/b/build/$rel"; then
+        differing=$((differing + 1))
+        [ "$differing" -le 25 ] && echo "  $rel"
+    fi
+done < <(cd "$work/a/build" && find . -name '*.obj' -o -name '*.a' | sed 's#^\./##' | sort)
+
+if [ "$differing" -eq 0 ]; then
+    echo "  ninguno: los objetos coinciden, la diferencia la introduce el enlazado"
+else
+    echo "  ($differing objetos distintos en total)"
+    echo
+    echo "--- reparto ---"
+    printf '  bajo subprojects/ : %s\n' \
+        "$(cd "$work/a/build" && find . -name '*.obj' | sed 's#^\./##' | while IFS= read -r r; do
+             cmp -s "$work/a/build/$r" "$work/b/build/$r" || echo "$r"; done | grep -c '^subprojects/' || true)"
+    printf '  resto del proyecto: %s\n' \
+        "$(cd "$work/a/build" && find . -name '*.obj' | sed 's#^\./##' | while IFS= read -r r; do
+             cmp -s "$work/a/build/$r" "$work/b/build/$r" || echo "$r"; done | grep -vc '^subprojects/' || true)"
+fi
 exit 1

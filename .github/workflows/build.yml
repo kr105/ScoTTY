@@ -28,6 +28,14 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: 'debian:bookworm-slim@sha256:abd67ffcfa541b485a3dff59865ab629aa048a6c613e639d36e7456b0b229241'
+    env:
+      WINEDEBUG: '-all'
+      # GitHub monta HOME=/github/home desde el host, con un uid distinto al del
+      # contenedor, y wine se niega a crear su prefijo ahí:
+      #   wine: '/github/home' is not owned by you, refusing to create a
+      #   configuration directory there
+      # /tmp sí es local al contenedor y pertenece a root, que es quien ejecuta.
+      WINEPREFIX: /tmp/wineprefix
     steps:
       - name: fijar apt a la instantánea de Debian
         run: |
@@ -62,9 +70,8 @@ jobs:
       # compilador no son ejecutables", que despista. Se crea aquí, aparte, para
       # que un problema de wine se vea como un problema de wine.
       - name: inicializar el prefijo de wine
-        env:
-          WINEDEBUG: '-all'
         run: |
+          mkdir -p "$WINEPREFIX"
           wine wineboot --init
           wineserver -w
 
@@ -78,8 +85,6 @@ jobs:
         run: ninja -C build
 
       - name: probar
-        env:
-          WINEDEBUG: '-all'
         run: meson test -C build --print-errorlogs
 
       - name: comprobar que el build no ha tocado el árbol de fuentes
