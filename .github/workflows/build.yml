@@ -12,6 +12,10 @@ env:
   # siga siendo reproducible dentro de dos años y no solo hoy: apuntar a
   # "bookworm" a secas traería el toolchain que hubiera ese día.
   #
+  # Se accede por http, no https, a propósito: bookworm-slim no trae
+  # ca-certificates, así que https aquí falla antes de poder instalarlo. La
+  # integridad la da la firma GPG que apt verifica, no el transporte.
+  #
   # Para actualizar el toolchain, se cambia esta fecha en un commit propio y se
   # comprueba que los hashes publicados cambian de forma esperada.
   DEBIAN_SNAPSHOT: '20260501T000000Z'
@@ -28,23 +32,41 @@ jobs:
       - name: fijar apt a la instantánea de Debian
         run: |
           set -eux
-          printf 'deb [check-valid-until=no] https://snapshot.debian.org/archive/debian/%s bookworm main\n' "$DEBIAN_SNAPSHOT" > /etc/apt/sources.list
+          # Fuente única y deliberada: solo la instantánea. Añadir
+          # deb.debian.org como respaldo parecería robustez, pero apt elegiría
+          # la versión más alta de las dos y acabaría cogiendo el toolchain del
+          # archivo vivo, rompiendo en silencio la reproducibilidad. Si la
+          # instantánea no responde, es mejor que el build falle a que compile
+          # con un toolchain distinto del declarado.
+          printf 'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/%s bookworm main\n' "$DEBIAN_SNAPSHOT" > /etc/apt/sources.list
           rm -f /etc/apt/sources.list.d/*
-          apt-get -o Acquire::Retries=5 update
+          apt-get -o Acquire::Retries=8 -o Acquire::http::Timeout=60 update
 
       - name: instalar toolchain
         run: |
           set -eux
-          apt-get -o Acquire::Retries=5 install -y --no-install-recommends \
+          apt-get -o Acquire::Retries=8 -o Acquire::http::Timeout=60 install -y --no-install-recommends \
             ca-certificates curl git \
             gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 mingw-w64-tools \
-            meson ninja-build python3 wine wine64
+            meson ninja-build python3 wine
           x86_64-w64-mingw32-gcc --version
 
       - uses: actions/checkout@v4
 
       - name: marcar el checkout como seguro para git
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # meson setup ejecuta un binario de prueba a través de wine para comprobar
+      # que el cross-compilador funciona. Con el prefijo de wine sin crear, esa
+      # comprobación puede fallar y el error que sale es "los ejecutables del
+      # compilador no son ejecutables", que despista. Se crea aquí, aparte, para
+      # que un problema de wine se vea como un problema de wine.
+      - name: inicializar el prefijo de wine
+        env:
+          WINEDEBUG: '-all'
+        run: |
+          wine wineboot --init
+          wineserver -w
 
       - name: configurar
         run: |
@@ -88,14 +110,20 @@ jobs:
       - name: fijar apt a la instantánea de Debian
         run: |
           set -eux
-          printf 'deb [check-valid-until=no] https://snapshot.debian.org/archive/debian/%s bookworm main\n' "$DEBIAN_SNAPSHOT" > /etc/apt/sources.list
+          # Fuente única y deliberada: solo la instantánea. Añadir
+          # deb.debian.org como respaldo parecería robustez, pero apt elegiría
+          # la versión más alta de las dos y acabaría cogiendo el toolchain del
+          # archivo vivo, rompiendo en silencio la reproducibilidad. Si la
+          # instantánea no responde, es mejor que el build falle a que compile
+          # con un toolchain distinto del declarado.
+          printf 'deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/%s bookworm main\n' "$DEBIAN_SNAPSHOT" > /etc/apt/sources.list
           rm -f /etc/apt/sources.list.d/*
-          apt-get -o Acquire::Retries=5 update
+          apt-get -o Acquire::Retries=8 -o Acquire::http::Timeout=60 update
 
       - name: instalar toolchain
         run: |
           set -eux
-          apt-get -o Acquire::Retries=5 install -y --no-install-recommends \
+          apt-get -o Acquire::Retries=8 -o Acquire::http::Timeout=60 install -y --no-install-recommends \
             ca-certificates curl git tzdata \
             gcc-mingw-w64-x86-64 binutils-mingw-w64-x86-64 mingw-w64-tools \
             meson ninja-build python3
