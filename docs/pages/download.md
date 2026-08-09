@@ -25,11 +25,11 @@ You can also get virus analysis from our official CDN [fosshub.com](https://www.
 ## Other available downloads:
 * [Precompiled portable version of KiTTY](../files/kitty_portable.exe "Precompiled portable version of KiTTY") (no configuration file to modify) 
 * [The uncompressed version of KiTTY](../files/kitty_nocompress.exe "The uncompressed version of KiTTY")
-* [The files transfer utility kscp.exe](../files/kscp.exe "The files transfer utility kscp.exe")
-* [The command line utility klink.exe](../files/klink.exe "The command line utility klink.exe")
-* [The KiTTY agent kageant.exe](../files/kageant.exe "The KiTTY agent kageant.exe")
+* [The files transfer utility sscp.exe](../files/sscp.exe "The files transfer utility sscp.exe")
+* [The command line utility slink.exe](../files/slink.exe "The command line utility slink.exe")
+* [The KiTTY agent sageant.exe](../files/sageant.exe "The KiTTY agent sageant.exe")
 
-> In order to use KiTTY with Pageant (another very useful soft from PuTTY team) just rename ```kitty.exe``` to ```putty.exe```
+> In order to use KiTTY with Pageant (another very useful soft from PuTTY team) just rename ```scotty.exe``` to ```putty.exe```
 
 ## Third-part softwares that work with KiTTY
 * [KiTTY session manager](https://www.noobunbox.net/projects/kitty-session-manager "KiTTY session manager")

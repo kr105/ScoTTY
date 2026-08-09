@@ -8,5 +8,5 @@ In order to help bug analysis, it's possible to make a memory dump of KiTTY.
 * Start the session that makes the issue
 * Press **CTRL+F8** keys
 * Write **/savedump** into the input box and press Enter
-* A **kitty.dmp** file is created into the same directory where **kitty.exe** is located
+* A **kitty.dmp** file is created into the same directory where **scotty.exe** is located
 * Remove **debug=yes** option 

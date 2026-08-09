@@ -3,7 +3,7 @@
 
 In order to replace in **Pageant** the function that allows you to launch a saved session, but without any menu or sub-menu, a launcher was integrated into **KiTTY**. To start this launcher just run KiTTY from the command line with the `-launcher` parameter:
 ```
-kitty.exe -launcher
+scotty.exe -launcher
 ```
 
 The software will start in the system tray as a new icon like this: 

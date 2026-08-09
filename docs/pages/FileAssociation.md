@@ -7,7 +7,7 @@ There is a new menu option, to export the settings of the running session into a
 
 The default extension for these files is **.ktx**.
 
-Then it is possible to run directly this saved session with a double-click on the **.ktx** file. But first you need to associate **.ktx** file with **KiTTY**: `kitty.exe -fileassoc`
+Then it is possible to run directly this saved session with a double-click on the **.ktx** file. But first you need to associate **.ktx** file with **KiTTY**: `scotty.exe -fileassoc`
 
 Here are two examples of save session you can run directly from KiTTY:
 

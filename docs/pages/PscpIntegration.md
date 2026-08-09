@@ -3,10 +3,10 @@
 
 ### pscp.exe
 
-To send a file into the running session with [pscp.exe](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html "PSCP from original PuTTY website") you have to select the **Send with pscp** item from the main menu, or press **CTRL+F3**. The file will be sent into the root of the account defined in the session. Binary **pscp.exe** should be in the same directory as **kitty.exe**. It is possible to define another path where the **pscp.exe** is located by setting the following entries in the **kitty.ini** file:
+To send a file into the running session with [pscp.exe](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html "PSCP from original PuTTY website") you have to select the **Send with pscp** item from the main menu, or press **CTRL+F3**. The file will be sent into the root of the account defined in the session. Binary **pscp.exe** should be in the same directory as **scotty.exe**. It is possible to define another path where the **pscp.exe** is located by setting the following entries in the **kitty.ini** file:
 
     [KiTTY]
-    PSCPPath=C:\Program Files\PuTTY\kscp.exe
+    PSCPPath=C:\Program Files\PuTTY\sscp.exe
     pscpport=22
 
 You can also send a file or a directory with a simple drag'n drop into the session window.

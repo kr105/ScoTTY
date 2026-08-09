@@ -64,8 +64,8 @@ step and nothing to install on Windows.
     meson setup build --cross-file cross/x86_64-w64-mingw32.ini
     ninja -C build
 
-The six executables land in `build/src/windows/`: `kitty.exe`,
-`klink.exe`, `kscp.exe`, `ksftp.exe`, `kageant.exe` and `kittygen.exe`.
+The six executables land in `build/src/windows/`: `scotty.exe`,
+`slink.exe`, `sscp.exe`, `ssftp.exe`, `sageant.exe` and `scottygen.exe`.
 
 The executables are self-contained: everything is linked statically, so there
 are no DLLs to ship alongside them.
@@ -83,7 +83,7 @@ would rather not carry a JPEG decoder in a terminal client, turn it off:
     meson setup build --cross-file cross/x86_64-w64-mingw32.ini \
                       -Dbackground_image=false
 
-That drops libjpeg entirely and takes about 750 KB off `kitty.exe`. The
+That drops libjpeg entirely and takes about 750 KB off `scotty.exe`. The
 `/screenshot` command still exists but reports failure instead of writing a
 file. Other options are listed in `meson.options`.
 

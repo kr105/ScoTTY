@@ -795,7 +795,7 @@ common_deps = [
 ] + win_libs
 
 executable(
-  'kitty',
+  'scotty',
   src_putty + [res_putty, scotty_ini_h, scotty_help_h],
   c_args: ['-DMOD_INTEGRATED_AGENT', '-DMOD_INTEGRATED_KEYGEN'],
   include_directories: putty_inc,
@@ -806,7 +806,7 @@ executable(
 )
 
 executable(
-  'klink',
+  'slink',
   src_plink + [res_plink],
   include_directories: putty_inc,
   dependencies: common_deps,
@@ -817,7 +817,7 @@ executable(
 )
 
 executable(
-  'kscp',
+  'sscp',
   src_pscp + [res_pscp],
   include_directories: putty_inc,
   dependencies: common_deps,
@@ -827,7 +827,7 @@ executable(
 )
 
 executable(
-  'ksftp',
+  'ssftp',
   src_psftp + [res_psftp],
   include_directories: putty_inc,
   dependencies: common_deps,
@@ -837,7 +837,7 @@ executable(
 )
 
 executable(
-  'kageant',
+  'sageant',
   src_pageant + [res_pageant],
   include_directories: putty_inc,
   dependencies: common_deps,
@@ -847,7 +847,7 @@ executable(
 )
 
 executable(
-  'kittygen',
+  'scottygen',
   src_puttygen + [res_puttygen],
   include_directories: putty_inc,
   dependencies: common_deps,

@@ -156,7 +156,7 @@ void SetProtectFlag( const int flag ) { ProtectFlag = flag ; }
 #define DEFAULT_SAV_FILE "scotty.sav"
 #endif
 #ifndef DEFAULT_EXE_FILE
-#define DEFAULT_EXE_FILE "kitty.exe"
+#define DEFAULT_EXE_FILE "scotty.exe"
 #endif
 
 /*
@@ -5729,8 +5729,8 @@ void InitWinMain( void ) {
 		if( existfile( IconFile ) ) 
 			{ HMODULE hDll ; if( ( hDll = LoadLibrary( TEXT(IconFile) ) ) != NULL ) hInstIcons = hDll ; }
 		if( hInstIcons==NULL )
-		if( existfile( "kitty.dll" ) ) 
-			{ HMODULE hDll ; if( ( hDll = LoadLibrary( TEXT("kitty.dll") ) ) != NULL ) hInstIcons = hDll ; }
+		if( existfile( "scotty.dll" ) ) 
+			{ HMODULE hDll ; if( ( hDll = LoadLibrary( TEXT("scotty.dll") ) ) != NULL ) hInstIcons = hDll ; }
 		}
 
 	// Teste la presence d'une note et l'affiche

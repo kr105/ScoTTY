@@ -13,25 +13,25 @@ Download it and put it into your **/bin** Cygwin directory.
 
 This feature is also available directly from the command-line. Once the **cygtermd.exe** is put into the **Cygwin** directory just call this command:
 ```
-kitty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /home/%USERNAME% /bin/bash -login" localhost
+scotty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /home/%USERNAME% /bin/bash -login" localhost
 ```
 
 Adapt **C:\cygwin64\bin\cygtermd.exe** if it has been installed to a different directory. You must provide a target hostname (ex: localhost) even if it is not used in this situation.
 
 If you are running this command from PowerShell rather than a Windows shortcut, Start➡Run, or a regular command prompt, you should use single quotes instead of double quotes.
 ```
-kitty.exe -localproxy 'C:\cygwin64\bin\cygtermd.exe /home/%USERNAME% /bin/bash -login' localhost
+scotty.exe -localproxy 'C:\cygwin64\bin\cygtermd.exe /home/%USERNAME% /bin/bash -login' localhost
 ```
  
 ### Start a **CMD.EXE** into a **KiTTY** terminal
 
 It is possible to start directly the Windows command line utility **cmd.exe**:
 ```
-kitty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /cygdrive/c/Windows /cygdrive/c/Windows/System32/cmd.exe" localhost
+scotty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /cygdrive/c/Windows /cygdrive/c/Windows/System32/cmd.exe" localhost
 ```
 Don't forget to choose the right codepage in translation tab or use the **-codepage** command line option.
 
-It is not necessary to have the full **Cygwin** environment to do this. Just add the **cygtermd.exe** file and the corresponding **cygwin1.dll** library next the **kitty.exe** binary.
+It is not necessary to have the full **Cygwin** environment to do this. Just add the **cygtermd.exe** file and the corresponding **cygwin1.dll** library next the **scotty.exe** binary.
   
  
 ### Use **winpty** to start **cmd.exe** or ** PowerShell** Windows utilities
@@ -40,17 +40,17 @@ It is also possible to start the Windows command line utility **cmd.exe** from t
 Get it and unzip it into your **/usr** Cygwin directory.
 Then run
 ```
-kitty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /usr/bin/winpty.exe C:\Windows\System32\cmd.exe" localhost
+scotty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /usr/bin/winpty.exe C:\Windows\System32\cmd.exe" localhost
 ```
 
 And now use it to run **PowerShell**:
 ```
-kitty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /usr/bin/winpty.exe C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" localhost
+scotty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /usr/bin/winpty.exe C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" localhost
 ```
 
 or **PowerShell 7**:
 ```
-kitty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /usr/bin/winpty.exe C:\Program Files\PowerShell\7\pwsh.exe" localhost
+scotty.exe -localproxy "C:\cygwin64\bin\cygtermd.exe /usr/bin/winpty.exe C:\Program Files\PowerShell\7\pwsh.exe" localhost
 ```
 
 ---

@@ -5,10 +5,10 @@ Now it is possible to use **KiTTY** with Internet Explorer.
 **KiTTY** can be integrated into Internet Explorer (or any other browser, such as Firefox) and so become the program linked with **putty://**, **telnet://** or **ssh://** links.
 
 First you have to download the file [kitty_ssh_handler.reg](../files/kitty_ssh_handler.reg).
-Then you must correct it to write the full path to the file kitty.exe on your system.
+Then you must correct it to write the full path to the file scotty.exe on your system.
 Finally, run it to update the registry.
 
-Alternatively you can also update the registry with the command-line parameter `kitty.exe -sshhandler`.
+Alternatively you can also update the registry with the command-line parameter `scotty.exe -sshhandler`.
 
 After this update it is possible to create HTML pages with **ssh://** and **telnet://** links.
 

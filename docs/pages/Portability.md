@@ -10,7 +10,7 @@ savemode=dir
 
 At the very first use, it is possible to copy all the configuration from the registry for users who already created sessions with **normal** KiTTY mode. You just have to run the software on the command line with the parameter `-convert-dir`:
 ```
-kitty.exe -convert-dir
+scotty.exe -convert-dir
 ```
 
 This option will create 6 sub-directories: 
@@ -26,7 +26,7 @@ containing all the configuration.
  
 Unlike the registry (classic) mode, it is possible to have several saved sessions with the same name, but in different folders. So that, in order to start a session with command-line option (**-load**) it is necessary to specify the folder where the session file is located with the **-folder** option.
 ```
-kitty.exe -folder SomeFolder/SomeSubFolder -load SessionName
+scotty.exe -folder SomeFolder/SomeSubFolder -load SessionName
 ```
 
   

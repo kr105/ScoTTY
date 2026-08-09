@@ -5,7 +5,7 @@ A light command-line chat server is hidden in **KiTTY**. To activate it open you
 
 ![](../img/ex_chat.jpg)
 
-Then put that [library](../files/kchat.dll) just near your **kitty.exe** file.
+Then put that [library](../files/kchat.dll) just near your **scotty.exe** file.
 
 When launching the first KiTTY session, the chat server will automatically start. To connect the server and begin a chat session, create a **passive** telnet session at **localhost:1987** (**1987** is the port number). Of course you can start your chat session in the same KiTTY where you create the server (i.e. the first KiTTY window).
 

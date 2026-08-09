@@ -434,7 +434,7 @@ int getpid(void) ;
 #define DEFAULT_SAV_FILE "scotty.sav"
 #endif
 #ifndef DEFAULT_EXE_FILE
-#define DEFAULT_EXE_FILE "kitty.exe"
+#define DEFAULT_EXE_FILE "scotty.exe"
 #endif
 
 /*

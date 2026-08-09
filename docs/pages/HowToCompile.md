@@ -17,4 +17,4 @@ mkdir -p builds 2> /dev/null || rm -f builds/*.exe
 docker run --rm -it -v $(pwd)/builds:/builds -e USR_UID=$(id -u) -e USR_GID=$(id -g) cyd01/cross-gcc "git clone https://github.com/cyd01/KiTTY.git ; cd KiTTY/src/windows ; make -f MAKEFILE.MINGW cross64 ; cd /builds ; ls -l"
 ```
 
-The **kitty.exe** and other stuff will be available into **/builds** directory.
+The **scotty.exe** and other stuff will be available into **/builds** directory.
