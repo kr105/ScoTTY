@@ -126,7 +126,7 @@ struct SockAddr {
 static tree234 *sktree;
 
 #ifdef MOD_PERSO
-#include "kitty.h"
+#include "scotty.h"
 int get_param( const char * val ) ;
 #endif
 #ifdef MOD_ZMODEM

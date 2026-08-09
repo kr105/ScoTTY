@@ -35,7 +35,7 @@ int DebugGetPassword( Conf *conf, const char *pwd ) ;
 void debug_logevent( const char *fmt, ... ) ;
 #endif
 #ifdef MOD_PROXY
-#include "kitty_proxy.h"
+#include "scotty_proxy.h"
 #endif
 
 /* The cipher order given here is the default order. */
@@ -1786,5 +1786,5 @@ void create_settings( const char * name ) {
 	free(nname) ;
 	conf_free(cfg);
 }
-#include "kitty_settings.c"
+#include "scotty_settings.c"
 #endif

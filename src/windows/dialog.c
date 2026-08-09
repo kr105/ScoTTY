@@ -54,9 +54,9 @@ static int ninitial = 0, ncircular = 0, circular_first = 0;
 #ifdef MOD_PERSO
 #include <math.h>
 #include <process.h>
-#include "kitty.h"
-#include "kitty_commun.h"
-#include "kitty_registry.h"
+#include "scotty.h"
+#include "scotty_commun.h"
+#include "scotty_registry.h"
 
 extern char BuildVersionTime[256] ;
 

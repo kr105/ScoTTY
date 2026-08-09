@@ -19,8 +19,8 @@ extern int IniFileFlag ;
 // Flag permettant la gestion de l'arborscence (dossier=folder) dans le cas d'un savemode=dir
 extern int DirectoryBrowseFlag ;
 
-#include "kitty_crypt.c"
-#include "kitty_commun.h"
+#include "scotty_crypt.c"
+#include "scotty_commun.h"
 
 size_t win_seat_output_local(Seat *seat, bool is_stderr, const void *data, size_t len) { return 0 ; }
 int get_param( const char * val ) {
@@ -53,7 +53,7 @@ void debug_logevent( const char *fmt, ... ) {
 }
 #endif
 #ifdef MOD_PROXY
-#include "kitty_proxy.h"
+#include "scotty_proxy.h"
 #endif
 
 void cmdline_error(const char *fmt, ...)

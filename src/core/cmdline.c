@@ -29,8 +29,8 @@
  */
 
 #ifdef MOD_PERSO
-#include "kitty_crypt.h"
-#include "kitty.h"
+#include "scotty_crypt.h"
+#include "scotty.h"
 int decode64(char *buffer) ;
 void SetAutoStoreSSHKey( void ) ;
 void load_open_settings_forced(char *filename, Conf *conf) ;

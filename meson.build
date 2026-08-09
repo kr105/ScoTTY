@@ -258,10 +258,10 @@ subdir('third_party/mini')
 
 gen_text_header = find_program('tools/gen-text-header.py')
 
-kitty_ini_h = custom_target(
-  'kitty_ini.h',
-  input: 'src/scotty/kitty_ini.txt',
-  output: 'kitty_ini.h',
+scotty_ini_h = custom_target(
+  'scotty_ini.h',
+  input: 'src/scotty/scotty_ini.txt',
+  output: 'scotty_ini.h',
   command: [
     gen_text_header, '@INPUT@', '@OUTPUT@',
     '--decl', 'char default_init_file_content[]',
@@ -271,10 +271,10 @@ kitty_ini_h = custom_target(
 
 # El texto de ayuda de la línea de órdenes sale de la documentación, así que
 # ambas no pueden desincronizarse.
-kitty_help_h = custom_target(
-  'kitty_help.h',
+scotty_help_h = custom_target(
+  'scotty_help.h',
   input: 'docs/pages/CommandLine.md',
-  output: 'kitty_help.h',
+  output: 'scotty_help.h',
   command: [
     gen_text_header, '@INPUT@', '@OUTPUT@',
     '--decl', 'static char *default_help_file_content',

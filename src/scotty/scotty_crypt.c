@@ -1,4 +1,4 @@
-#include "kitty_crypt.h"
+#include "scotty_crypt.h"
 
 int cryptstring( const int mode, char * st, const char * key ) {
 	if( mode>1 ) return strlen(st);

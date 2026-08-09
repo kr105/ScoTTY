@@ -40,7 +40,7 @@ static void variable_pitch_handler(union control *ctrl, dlgparam *dlg,
 }
 
 #ifdef MOD_PERSO
-#include "kitty.h"
+#include "scotty.h"
 int get_param( const char * val ) ;
 char * get_param_str( const char * val ) ;
 int GetPuttyFlag(void) ;

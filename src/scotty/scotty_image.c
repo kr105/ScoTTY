@@ -28,7 +28,7 @@
 #include "putty.h"
 #include "terminal.h"
 
-#include "kitty_image.h"
+#include "scotty_image.h"
 
 extern Conf *conf ;// extern Config cfg;
 //extern int offset_width, offset_height ;

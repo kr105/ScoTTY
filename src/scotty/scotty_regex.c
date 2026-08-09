@@ -1,4 +1,4 @@
-#include "kitty_regex.h"
+#include "scotty_regex.h"
 
 int strgrep( const char * pattern, const char * str ) {
 	int return_code = 1 ;

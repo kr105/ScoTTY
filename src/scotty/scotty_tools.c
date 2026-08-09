@@ -1,4 +1,4 @@
-#include "kitty_tools.h"
+#include "scotty_tools.h"
 
 char *stristr (const char *meule_de_foin, const char *aiguille) {
 	char *c1, *c2, *res = NULL ; int i ;

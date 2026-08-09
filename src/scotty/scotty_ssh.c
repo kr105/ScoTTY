@@ -1,5 +1,5 @@
-#include "kitty_ssh.h"
-#include "kitty_tools.h"
+#include "scotty_ssh.h"
+#include "scotty_tools.h"
 
 #ifdef MOD_PORTKNOCKING
 void vprint(char *fmt, ...)

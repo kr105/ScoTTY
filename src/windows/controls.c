@@ -23,7 +23,7 @@
 #include <commctrl.h>
 
 #ifdef MOD_PERSO
-#include "kitty.h"
+#include "scotty.h"
 #endif
 #ifdef MOD_ZMODEM
 #include <shlobj.h>

@@ -24,14 +24,14 @@
 #include <iphlpapi.h>
 
 // Includes de KiTTY
-#include "kitty.h"
-#include "kitty_commun.h"
-#include "kitty_image.h"
-#include "kitty_crypt.h"
-#include "kitty_registry.h"
-#include "kitty_tools.h"
-#include "kitty_win.h"
-#include "kitty_launcher.h"
+#include "scotty.h"
+#include "scotty_commun.h"
+#include "scotty_image.h"
+#include "scotty_crypt.h"
+#include "scotty_registry.h"
+#include "scotty_tools.h"
+#include "scotty_win.h"
+#include "scotty_launcher.h"
 /*************************************************
 ** FIN DE LA DEFINITION DES INCLUDES
 *************************************************/
@@ -375,7 +375,7 @@ extern int PrintMaxCharPerLine ;
 extern char puttystr[1024] ;
 
 #ifdef MOD_PROXY
-#include "kitty_proxy.h"
+#include "scotty_proxy.h"
 #endif
 
 // Handle sur la fenetre principale
@@ -1248,13 +1248,13 @@ void CountUp( void ) {
 		}
 	}
 
-#include "kitty_help.h"
+#include "scotty_help.h"
 char * GetHelpMessage(void) {
 	return default_help_file_content ;
 }
 
 // Si le fichier kitty.ini n'existe pas => creation du fichier par defaut
-#include "kitty_ini.h"
+#include "scotty_ini.h"
 void CreateIniFile( const char * filename ) {
 	FILE *fp;
 	if( (fp=fopen(filename,"w")) != NULL ) {
@@ -3649,7 +3649,7 @@ void SaveCurrentSetting( HWND hwnd ) {
 
 // Procedures de generation du dump "memoire" (/savedump)
 #ifdef MOD_SAVEDUMP
-#include "kitty_savedump.c"
+#include "scotty_savedump.c"
 #endif
 void InitShortcuts( void ) ;
 
@@ -4425,7 +4425,7 @@ void ReadInitScript( const char * filename ) {
 }
 
 
-#include "kitty_launcher.c"
+#include "scotty_launcher.c"
 
 // Creer une arborescence de repertoire à partir du registre
 int MakeDirTree( const char * Directory, const char * s, const char * sd ) {

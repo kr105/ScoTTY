@@ -29,9 +29,9 @@ extern int IniFileFlag ;
 // Flag permettant la gestion de l'arborscence (dossier=folder) dans le cas d'un savemode=dir
 extern int DirectoryBrowseFlag ;
 
-#include "kitty_crypt.h"
-#include "kitty_commun.h"
-#include "kitty_store.h"
+#include "scotty_crypt.h"
+#include "scotty_commun.h"
+#include "scotty_store.h"
 #include "storage.h"
 
 static char pphrase[2048]="";

@@ -11,8 +11,8 @@
 #define EMERGENCY_INIT int emergency_brake_count = 200000, while_iterations=0 ;
 #define EMERGENCY_BREAK if( while_iterations++ > emergency_brake_count ) { break ; }
 
-#include "kitty_commun.h"
-#include "kitty_tools.h"
+#include "scotty_commun.h"
+#include "scotty_tools.h"
 
 int get_param( const char * val ) ;
 void mungestr(const char *in, char *out);

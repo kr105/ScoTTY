@@ -2,8 +2,8 @@
  * Fichier contenant les procedures communes à tous les programmes putty, pscp, psftp, plink, pageant
  */
 
-#include "kitty_commun.h"
-#include "kitty_tools.h"
+#include "scotty_commun.h"
+#include "scotty_tools.h"
 
 // Flag permettant d'activer l'acces a du code particulier permettant d'avoir plus d'info dans le kitty.dmp
 int debug_flag = 0 ;

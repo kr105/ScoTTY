@@ -23,7 +23,7 @@ static const char *const reg_jumplist_value = "Recent sessions";
 static const char *const puttystr = PUTTY_REG_POS "\\Sessions";
 
 #ifdef MOD_PERSO
-#include "kitty_store.h"
+#include "scotty_store.h"
 #endif
 
 static bool tried_shgetfolderpath = false;

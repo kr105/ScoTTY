@@ -1,4 +1,4 @@
-#include "kitty_registry.h"
+#include "scotty_registry.h"
 
 //static const int cstMaxRegLength = 1024;
 #define cstMaxRegLength 1024

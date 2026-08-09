@@ -15,8 +15,8 @@
 #include "script.h"
 #endif  /* rutty */
 #ifdef MOD_PERSO
-#include "kitty.h"
-#include "kitty_store.h"
+#include "scotty.h"
+#include "scotty_store.h"
 union control * ctrlHostnameEdit = NULL ;
 void MASKPASS( const int mode, char * password ) ;
 int stricmp(const char *s1, const char *s2) ;
@@ -823,7 +823,7 @@ static void sshbug_handler(union control *ctrl, dlgparam *dlg,
 }
 
 #ifdef MOD_PERSO
-#include "kitty.h"
+#include "scotty.h"
 int dlg_listbox_get(union control *ctrl, void *dlg, int index, char * pstr, int maxcount) ;
 int dlg_listbox_gettext(union control *ctrl, void *dlg, int index, char * pstr, int maxcount) ;
 
@@ -918,7 +918,7 @@ static void folder_handler(union control *ctrl, dlgparam *dlg,
 	}
 #endif
 #ifdef MOD_PROXY
-#include "kitty_proxy.h"
+#include "scotty_proxy.h"
 void proxy_selection_handler(union control *ctrl, dlgparam *dlg, void *data, int event) {
     int i, j;
     Conf *conf = (Conf *)data;

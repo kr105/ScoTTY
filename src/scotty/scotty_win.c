@@ -1,4 +1,4 @@
-#include "kitty_win.h"
+#include "scotty_win.h"
 
 // Modifie la transparence
 void SetTransparency( HWND hwnd, int value ) {

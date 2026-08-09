@@ -1,9 +1,9 @@
 #include <limits.h>
 
 
-#include "kitty_store.h"
-#include "kitty_commun.h"
-#include "kitty_tools.h"
+#include "scotty_store.h"
+#include "scotty_commun.h"
+#include "scotty_tools.h"
 
 
 #ifndef snewn
