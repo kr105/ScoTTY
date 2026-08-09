@@ -46,6 +46,10 @@ BOOL RegDelTree (HKEY hKeyRoot, LPCTSTR lpSubKey) ;
 // Copie une clé de registre vers une autre
 void RegCopyTree( HKEY hMainKey, LPCTSTR lpSubKey, LPCTSTR lpDestKey ) ;
 
+/* Copia Software\9bis.com\KiTTY a Software\ScoTTY la primera vez que se
+   arranca tras actualizar desde KiTTY. Idempotente; no borra la clave vieja. */
+int MigrateFromKiTTYRegistry( void ) ;
+
 // Nettoie la clé de PuTTY pour enlever les clés et valeurs spécifique à KiTTY
 BOOL RegCleanPuTTY( void ) ;
 

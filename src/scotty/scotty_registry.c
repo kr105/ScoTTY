@@ -1,4 +1,8 @@
 #include "scotty_registry.h"
+/* PUTTY_REG_POS y KITTY_LEGACY_REG_POS viven aqui. Sin este include la
+   migracion se compilaba silenciosamente como un return 0. */
+#include "putty.h"
+#include "platform.h"
 
 //static const int cstMaxRegLength = 1024;
 #define cstMaxRegLength 1024
@@ -749,10 +753,14 @@ int ExportSubKeyToFile( HKEY hkey, const char *subkey, const char *keyname, cons
 
 	
 /******
-Supprimer toute trace de KiTTY dans le registre.
+Supprimer toute trace de ScoTTY dans le registre.
+Se incluye tambien la clave de KiTTY: ScoTTY la copia al migrar, asi que
+borrar solo la nueva dejaria la vieja y la migracion volveria a dispararse.
 Ecrire et exécuter un fichier utf-8 .reg contenant les lignes:
 
 Windows Registry Editor Version 5.00
+
+[-HKEY_CURRENT_USER\Software\ScoTTY]
 
 [-HKEY_CURRENT_USER\Software\9bis.com\KiTTY]
 
@@ -767,3 +775,33 @@ Windows Registry Editor Version 5.00
 [-HKEY_CLASSES_ROOT\.ktx]
 
 ******/
+
+/*
+ * Migración desde KiTTY.
+ *
+ * ScoTTY guarda su configuración en Software\ScoTTY. Las versiones anteriores,
+ * cuando el proyecto se llamaba KiTTY, la guardaban en Software\9bis.com\KiTTY.
+ * Sin esto, actualizar equivaldría a empezar de cero: sesiones, contraseñas y
+ * ajustes desaparecerían de la vista del usuario aunque siguieran en el
+ * registro.
+ *
+ * Se copia, no se mueve: la clave antigua se deja intacta, de modo que volver a
+ * una versión KiTTY sigue funcionando y no hay riesgo de perder datos si la
+ * copia se interrumpe a medias.
+ *
+ * Solo actúa cuando la clave nueva no existe todavía, así que es idempotente y
+ * no pisa nada si el usuario ya ha configurado ScoTTY.
+ *
+ * Devuelve 1 si ha migrado algo, 0 si no había nada que hacer.
+ */
+int MigrateFromKiTTYRegistry( void ) {
+#ifdef KITTY_LEGACY_REG_POS
+	if( RegTestKey( HKEY_CURRENT_USER, TEXT(PUTTY_REG_POS) ) ) return 0 ;
+	if( !RegTestKey( HKEY_CURRENT_USER, TEXT(KITTY_LEGACY_REG_POS) ) ) return 0 ;
+
+	RegCopyTree( HKEY_CURRENT_USER, TEXT(KITTY_LEGACY_REG_POS), TEXT(PUTTY_REG_POS) ) ;
+	return 1 ;
+#else
+	return 0 ;
+#endif
+}

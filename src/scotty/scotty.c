@@ -3303,7 +3303,7 @@ int ReadSpecialMenu( HMENU menu, char * KeyName, int * nbitem, int separator ) {
 			achValue[0] = '\0';
 
 			if( RegEnumValue(hKey,i,achValue,&cchValue,NULL,&lpType,lpData,&dwDataSize) == ERROR_SUCCESS ) {
-			if( strcmp(achValue,"Default Settings") || strcmp(KeyName,"Software\\9bis.com\\KiTTY\\Launcher") ) { 
+			if( strcmp(achValue,"Default Settings") || strcmp(KeyName,PUTTY_REG_POS "\\Launcher") ) { 
 				if( ShortcutsFlag ) {
 					if( nb < 26 ) 
 						sprintf( buffer, "%s\tCtrl+Shift+%c", achValue, ('A'+nb) ) ;
@@ -5581,6 +5581,11 @@ void InitWinMain( void ) {
 
 	// Initialisation de la librairie de cryptage
 	bcrypt_init( 0 ) ;
+
+	// Recupera la configuracion de KiTTY la primera vez que se arranca ScoTTY.
+	// Va antes de leer cualquier ajuste, para que el arranque ya vea las
+	// sesiones migradas.
+	MigrateFromKiTTYRegistry() ;
 	
 	// Recupere le repertoire de depart et le repertoire de la configuration pour savemode=dir
 	GetInitialDirectory( InitialDirectory ) ;

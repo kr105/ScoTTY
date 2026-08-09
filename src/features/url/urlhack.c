@@ -9,6 +9,8 @@
 #include <string.h>
 #include "urlhack.h"
 #include "misc.h"
+/* Para PUTTY_REG_POS: la ruta del registro no debe estar duplicada aqui. */
+#include "platform.h"
 #include "puttymem.h"
 #include <assert.h>
 
@@ -318,6 +320,6 @@ void FixWrongRegex() {
 	char *st;
 	st = (char*) malloc(strlen(urlhack_default_regex)+100);
 	sprintf(st,"\"HyperlinkRegularExpression\"=\"%s\"",urlhack_default_regex);
-	InitRegistryAllSessions( HKEY_CURRENT_USER, "Software\\9bis.com\\KiTTY", "Sessions", "hyperlinkfix.reg", st ) ;
+	InitRegistryAllSessions( HKEY_CURRENT_USER, PUTTY_REG_POS, "Sessions", "hyperlinkfix.reg", st ) ;
 	free(st);
 }

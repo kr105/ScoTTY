@@ -94,7 +94,7 @@ static filereq *keypath = NULL;
 #define IDM_SESSIONS_BASE 0x1000
 #define IDM_SESSIONS_MAX  0x2000
 #ifdef MOD_PERSO
-#define PUTTY_REGKEY      "Software\\9bis.com\\KiTTY\\Sessions"
+#define PUTTY_REGKEY      PUTTY_REG_POS "\\Sessions"
 #else
 #define PUTTY_REGKEY      "Software\\SimonTatham\\PuTTY\\Sessions"
 #endif

@@ -169,12 +169,22 @@ struct FontSpec *fontspec_new(
 #define PUTTY_REG_GPARENT "Software"
 #define PUTTY_REG_GPARENT_CHILD "SimonTatham"
 #else
-#define PUTTY_REG_POS "Software\\9bis.com\\KiTTY"
-#define PUTTY_REG_POS_SAVE "Software\\9bis.com\\KiTTY_save"
-#define PUTTY_REG_PARENT "Software\\9bis.com"
-#define PUTTY_REG_PARENT_CHILD "KiTTY"
+#define PUTTY_REG_POS "Software\\ScoTTY"
+#define PUTTY_REG_POS_SAVE "Software\\ScoTTY_save"
+#define PUTTY_REG_PARENT "Software"
+#define PUTTY_REG_PARENT_CHILD "ScoTTY"
 #define PUTTY_REG_GPARENT "Software"
-#define PUTTY_REG_GPARENT_CHILD "9bis.com"
+#define PUTTY_REG_GPARENT_CHILD "ScoTTY"
+
+/*
+ * Dónde guardaba KiTTY sus sesiones. Al arrancar, si la clave de ScoTTY aún no
+ * existe y esta sí, se copia entera: nadie pierde sesiones al actualizar desde
+ * KiTTY. Ver MigrateFromKiTTYRegistry() en scotty_registry.c.
+ *
+ * No confundir con Software\SimonTatham\PuTTY, que es la de PuTTY y se sigue
+ * leyendo aparte para importar sesiones.
+ */
+#define KITTY_LEGACY_REG_POS "Software\\9bis.com\\KiTTY"
 #endif
 #else
 #define PUTTY_REG_POS "Software\\SimonTatham\\PuTTY"
