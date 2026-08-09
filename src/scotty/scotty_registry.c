@@ -634,8 +634,8 @@ void CreateFileAssoc() {
 
 	// Association des fichers .ktx avec l'application KiTTY
 	// Création d l'application
-	RegTestOrCreate( HKEY_CLASSES_ROOT, "kitty.connect.1", "", "KiTTY connection manager") ;
-	RegTestOrCreate( HKEY_CLASSES_ROOT, "kitty.connect.1", "FriendlyTypeName", "@KiTTY, -120") ;
+	RegTestOrCreate( HKEY_CLASSES_ROOT, "kitty.connect.1", "", "ScoTTY connection manager") ;
+	RegTestOrCreate( HKEY_CLASSES_ROOT, "kitty.connect.1", "FriendlyTypeName", "@ScoTTY, -120") ;
 	RegTestOrCreate( HKEY_CLASSES_ROOT, "kitty.connect.1\\CurVer", "", "kitty.connect.1") ;
 	sprintf(buffer, "%s", path ) ;
 	RegTestOrCreate( HKEY_CLASSES_ROOT, "kitty.connect.1\\DefaultIcon", "", buffer);

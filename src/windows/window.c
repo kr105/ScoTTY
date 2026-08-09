@@ -1319,8 +1319,8 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show)
 		} else if( !strcmp(p, "-classname") ) {
 			i++ ;
 			if( strlen( argv[i] ) > 0 ) {
-				strcpy( KiTTYClassName, argv[i] ) ;
-				appname = KiTTYClassName ;
+				strcpy( ScoTTYClassName, argv[i] ) ;
+				appname = ScoTTYClassName ;
 				}
 #endif
 		} else if( !strcmp(p, "-sendcmd") ) {
@@ -1449,7 +1449,7 @@ if( conf_get_int(conf,CONF_icone) == 0 ) {
 	wndclass.hbrBackground = NULL;
 	wndclass.lpszMenuName = NULL;
 #if (defined MOD_PERSO) && (!defined FLJ)
-	wndclass.lpszClassName = dup_mb_to_wc(DEFAULT_CODEPAGE, 0, KiTTYClassName);
+	wndclass.lpszClassName = dup_mb_to_wc(DEFAULT_CODEPAGE, 0, ScoTTYClassName);
 #else
 	wndclass.lpszClassName = dup_mb_to_wc(DEFAULT_CODEPAGE, 0, appname);
 #endif
@@ -3320,7 +3320,7 @@ static BOOL CALLBACK CtrlTabWindowProc(HWND hwnd, LPARAM lParam) {
     struct ctrl_tab_info* info = (struct ctrl_tab_info*) lParam;
     char lpszClassName[256];
 #if (defined MOD_PERSO) && (!defined FLJ)
-	strcpy(lpszClassName,KiTTYClassName) ;
+	strcpy(lpszClassName,ScoTTYClassName) ;
 #else
 	strcpy(lpszClassName,appname) ;
 #endif
@@ -4422,7 +4422,7 @@ free(cmd);
 		break ;
 	  case IDM_TRANSPARDOWN: // Diminuer l'opacite (augmenter la transparence)
 		if( GetTransparencyFlag() && (conf_get_int(conf,CONF_transparencynumber)!=-1) && (conf_get_int(conf,CONF_transparencynumber)<255) ) {
-			if( conf_get_int(conf,CONF_transparencynumber)==245 ) MessageBox( hwnd, "      KiTTY made by      \r\nCyril Dupont\r\nLeonard Nero", "About", MB_OK ) ;
+			if( conf_get_int(conf,CONF_transparencynumber)==245 ) MessageBox( hwnd, "    KiTTY made by    \r\nCyril Dupont\r\nLeonard Nero", "About", MB_OK ) ;
 			conf_set_int( conf, CONF_transparencynumber, conf_get_int(conf,CONF_transparencynumber)+10 ) ;
 			if( conf_get_int(conf,CONF_transparencynumber)>255) conf_set_int( conf, CONF_transparencynumber, 255 ) ;
 			SetTransparency( hwnd, 255-conf_get_int(conf,CONF_transparencynumber) ) ;

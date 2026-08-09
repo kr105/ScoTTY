@@ -20,7 +20,9 @@
 #include <string.h>
 #include <windows.h>
 const char ver[] = "Custom build" ;
-const char sshver[] = "PuTTY-KiTTY\0                           " ;
+/* Lo que el cliente anuncia al servidor. Debe quedar por debajo de 40
+   caracteres: set_sshver() trunca ahi. */
+const char sshver[] = "PuTTY-ScoTTY\0                          " ;
 void set_sshver( char * vers ) { 
 	if(strlen(vers)<40 ) {
 		strcpy( sshver, vers ) ; 

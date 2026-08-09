@@ -382,7 +382,7 @@ static char * KittyIniFile = NULL ;
 static char * KittySavFile = NULL ;
 
 // Nom de la classe de l'application
-char KiTTYClassName[128] = "" ;
+char ScoTTYClassName[128] = "" ;
 
 // Parametres de l'impression
 extern int PrintCharSize ;
@@ -679,7 +679,7 @@ char * get_param_str( const char * val ) {
 	if( !stricmp( val, "INI" ) ) return KittyIniFile ;
 	else if( !stricmp( val, "SAV" ) ) return KittySavFile ;
 	else if( !stricmp( val, "NAME" ) ) return INIT_SECTION ;
-	else if( !stricmp( val, "CLASS" ) ) return KiTTYClassName ;
+	else if( !stricmp( val, "CLASS" ) ) return ScoTTYClassName ;
 	return NULL ;
 	}
 
@@ -1787,7 +1787,7 @@ void SendAutoCommand( HWND hwnd, const char * cmd ) {
 BOOL CALLBACK SendCommandProc( HWND hwnd, LPARAM lParam ) {
 	char buffer[256] ;
 	GetClassName( hwnd, buffer, 256 ) ;
-	if( !strcmp( buffer, KiTTYClassName ) ) {
+	if( !strcmp( buffer, ScoTTYClassName ) ) {
 		if( hwnd != MainHwnd ) {
 			COPYDATASTRUCT data;
 			data.dwData = 1 ;
@@ -1814,7 +1814,7 @@ BOOL CALLBACK ResizeWinListProc( HWND hwnd, LPARAM lParam ) {
 	char buffer[256] ;
 	GetClassName( hwnd, buffer, 256 ) ;
 	
-	if( !strcmp( buffer, KiTTYClassName ) )
+	if( !strcmp( buffer, ScoTTYClassName ) )
 	if( hwnd != MainHwnd ) {
 		RECT * rc = (RECT*) lParam ;
 		LPARAM pos = MAKELPARAM( rc->left, rc->top ) ;
@@ -3772,8 +3772,8 @@ int InternalCommand( HWND hwnd, char * st ) {
 		return 1 ; 
 	} else if( !strcmp( st, "/init" ) ) { 
 		char buffer[4096] ;
-		sprintf( buffer,"ConfigDirectory=%s\nIniFileFlag=%d\nDirectoryBrowseFlag=%d\nInitialDirectory=%s\nKittyIniFile=%s\nKittySavFile=%s\nKiTTYClassName=%s\n"
-			,ConfigDirectory,IniFileFlag,DirectoryBrowseFlag,InitialDirectory,KittyIniFile,KittySavFile,KiTTYClassName ) ;
+		sprintf( buffer,"ConfigDirectory=%s\nIniFileFlag=%d\nDirectoryBrowseFlag=%d\nInitialDirectory=%s\nKittyIniFile=%s\nKittySavFile=%s\nScoTTYClassName=%s\n"
+			,ConfigDirectory,IniFileFlag,DirectoryBrowseFlag,InitialDirectory,KittyIniFile,KittySavFile,ScoTTYClassName ) ;
 		MessageBox(hwnd,buffer,"Configuration infomations",MB_OK);
 		return 1 ; 
 	} else if( !strcmp( st, "/capslock" ) ) { 
@@ -5627,12 +5627,12 @@ void InitWinMain( void ) {
 	InitNameConfigFile() ;
 
 	// Initialisation du nom de la classe
-	strcpy( KiTTYClassName, appname ) ;
+	strcpy( ScoTTYClassName, appname ) ;
 
 #if (defined MOD_PERSO) && (!defined FLJ)
 	if( ReadParameter( INIT_SECTION, "KiClassName", buffer ) ) 
-		{ if( (strlen(buffer)>0) && (strlen(buffer)<128) ) { buffer[127]='\0'; strcpy( KiTTYClassName, buffer ) ; } }
-	appname = KiTTYClassName ;
+		{ if( (strlen(buffer)>0) && (strlen(buffer)<128) ) { buffer[127]='\0'; strcpy( ScoTTYClassName, buffer ) ; } }
+	appname = ScoTTYClassName ;
 #endif
 
 	// Initialise le tableau des menus

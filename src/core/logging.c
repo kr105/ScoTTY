@@ -230,7 +230,7 @@ static void logfopen_callback(void *vctx, int mode)
 	tm = ltime();
 	strftime(buf, 24, "%Y.%m.%d %H:%M:%S", &tm);
 #ifdef MOD_PERSO
-	logprintf(ctx, "=~=~=~=~=~=~=~=~=~=~=~= KiTTY log %s"
+	logprintf(ctx, "=~=~=~=~=~=~=~=~=~=~=~= ScoTTY log %s"
 		  " =~=~=~=~=~=~=~=~=~=~=~=\r\n", buf);
 #else
 	logprintf(ctx, "=~=~=~=~=~=~=~=~=~=~=~= PuTTY log %s"

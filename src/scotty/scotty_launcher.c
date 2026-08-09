@@ -389,7 +389,7 @@ BOOL CALLBACK RefreshWinListProc( HWND hwnd, LPARAM lParam ) {
 	char buffer[256] ;
 	GetClassName( hwnd, buffer, 256 ) ;
 	
-	if( !strcmp( buffer, KiTTYClassName ) )
+	if( !strcmp( buffer, ScoTTYClassName ) )
 	if( hwnd != MainHwnd ) {
 		TabWin[NbWin].hwnd=hwnd ;
 		GetWindowText( hwnd, TabWin[NbWin].name, 127 ) ;
@@ -514,8 +514,8 @@ LRESULT CALLBACK Launcher_WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 #ifdef FLJ
 	TrayIcone.szTip[1024] = (TCHAR*)"PuTTY\0" ;			// Le tooltip par défaut, soit rien
 #else
-	//TrayIcone.szTip[1024] = "KiTTY That\'s all folks!\0" ;			// Le tooltip par défaut, soit rien
-	strcpy( TrayIcone.szTip, "KiTTY That\'s all folks!\0" ) ;			// Le tooltip par défaut, soit rien
+	//TrayIcone.szTip[1024] = "ScoTTY That\'s all folks!\0" ;			// Le tooltip par défaut, soit rien
+	strcpy( TrayIcone.szTip, "ScoTTY That\'s all folks!\0" ) ;			// Le tooltip par défaut, soit rien
 #endif
 	TrayIcone.hWnd = hwnd ;
 	ResShell = Shell_NotifyIcon(NIM_ADD, &TrayIcone);
@@ -523,7 +523,7 @@ LRESULT CALLBACK Launcher_WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
 #ifdef FLJ
 		strcpy( TrayIcone.szTip, "PuTTY\0" ) ;
 #else
-		strcpy( TrayIcone.szTip, "KiTTY That\'s all folks!\0" ) ;
+		strcpy( TrayIcone.szTip, "ScoTTY That\'s all folks!\0" ) ;
 #endif
 		ResShell = Shell_NotifyIcon(NIM_MODIFY, &TrayIcone);
 		if (IsWindowVisible(hwnd)) ShowWindow(hwnd, SW_HIDE);
@@ -665,10 +665,10 @@ int WINAPI Launcher_WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int s
 	WNDCLASS wndclass ;
 	MSG msg;
 	char buffer[4096] ;
-	char className[1024] = "KiTTYLauncher" ;
+	char className[1024] = "ScoTTYLauncher" ;
 	
-	if( strcmp(KiTTYClassName,appname) ) { strcpy(className,KiTTYClassName) ; }
-	else if( strcmp(KiTTYClassName,"ScoTTY") ) { strcpy(className,KiTTYClassName) ; }
+	if( strcmp(ScoTTYClassName,appname) ) { strcpy(className,ScoTTYClassName) ; }
+	else if( strcmp(ScoTTYClassName,"ScoTTY") ) { strcpy(className,ScoTTYClassName) ; }
 	if( ReadParameter( "Launcher", "classname", buffer ) ) {
 		buffer[1023]='\0' ;
 		if( strlen(buffer)>0 ) { strcpy(className,buffer) ; }
@@ -704,7 +704,7 @@ int WINAPI Launcher_WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int s
 	}
 	if( LauncherConfReload ) InitLauncherRegistry() ;
 		
-	MainHwnd = CreateWindowEx(0, className, "KiTTYLauncher",
+	MainHwnd = CreateWindowEx(0, className, "ScoTTYLauncher",
 				0,//WS_OVERLAPPEDWINDOW,
 				CW_USEDEFAULT, CW_USEDEFAULT,
 				CW_USEDEFAULT, CW_USEDEFAULT,

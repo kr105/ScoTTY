@@ -56,7 +56,7 @@ extern int between_char_delay ;
 extern int internal_delay ;
 
 // Nom de la classe de l'application
-extern char KiTTYClassName[128] ;
+extern char ScoTTYClassName[128] ;
 
 // Flag pour imposer le passage en majuscule
 // extern int CapsLockFlag ;

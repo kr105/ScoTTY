@@ -802,7 +802,7 @@ static BOOL AddTrayIcon(HWND hwnd)
     tnid.hIcon = hicon = LoadIcon(hinst, MAKEINTRESOURCE(201));
 #endif
 #ifdef MOD_PERSO
-    strcpy(tnid.szTip, "Kageant (KiTTY authentication agent)");
+    strcpy(tnid.szTip, "Sageant (ScoTTY authentication agent)");
 #else
     strcpy(tnid.szTip, "Pageant (PuTTY authentication agent)");
 #endif

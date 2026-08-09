@@ -218,7 +218,7 @@ BEGIN
     ICON            IDI_MAINICON_0,IDC_STATIC,7,7,30,20
     LTEXT           "",IDA_VERSION,45,7,198,8
     LTEXT           "Copyright \251 2005-2023",IDC_STATIC,45,19,78,8
-    LTEXT           "Fork of KiTTY by 9bis.com - https://www.9bis.net/kitty",
+    LTEXT           "Fork of KiTTY - www.9bis.net/kitty",
                     IDC_WEBPAGE,45,31,145,8
     LTEXT           "Contact:",IDC_STATIC,45,43,46,8
     LTEXT           "Report a bug",IDC_EMAIL,77,43,83,8

@@ -676,7 +676,7 @@ void SaveDumpConfig( FILE *fp, Conf * conf ) {
 	fprintf( fp, "disablealtgr=%d\n",		conf_get_int(conf,CONF_disablealtgr) ) ;
 #endif
 
-	fprintf( fp, "\n[[KiTTY specific configuration]]\n" ) ;
+	fprintf( fp, "\n[[ScoTTY specific configuration]]\n" ) ;
 	fprintf( fp, "IniFileFlag=%d - ",IniFileFlag) ;
 	switch(IniFileFlag) {
 		case 0: fprintf( fp, "Registry\n" ) ; break ;
@@ -729,7 +729,7 @@ void SaveDumpConfig( FILE *fp, Conf * conf ) {
 	if( PlinkPath!= NULL ) fprintf( fp, "PlinkPath=%s\n", PlinkPath ) ;
 	if( KittyIniFile!= NULL ) fprintf( fp, "KittyIniFile=%s\n", KittyIniFile ) ;
 	if( KittySavFile!= NULL ) fprintf( fp, "KittySavFile=%s\n", KittySavFile ) ;
-	if( KiTTYClassName != NULL ) fprintf( fp, "KiTTYClassName=%s\n", KiTTYClassName ) ;
+	if( ScoTTYClassName != NULL ) fprintf( fp, "ScoTTYClassName=%s\n", ScoTTYClassName ) ;
 	if( CtHelperPath!= NULL ) fprintf( fp, "CtHelperPath=%s\n", CtHelperPath ) ;
 	if( strlen(ManagePassPhrase(NULL))>0 ) fprintf( fp, "PassPhrase=%s\n", ManagePassPhrase(NULL)) ;
 	fprintf( fp, "is_backend_connected=%d\n", is_backend_connected ) ;
@@ -861,7 +861,7 @@ void SaveDumpFile( char * filename ) {
 		fputs( "\n@@@ Environment variables @@@\n\n", fpout ) ;
 		SaveDumpEnvironment( fpout ) ; fflush( fpout ) ;
 		
-		fputs( "\n@@@ KiTTYIniFile @@@\n\n", fpout ) ;
+		fputs( "\n@@@ ScoTTYIniFile @@@\n\n", fpout ) ;
 		if( ( fp = fopen( KittyIniFile, "r" ) ) != NULL ) {
 			while( fgets( buffer, 4095, fp ) != NULL ) fputs( buffer, fpout ) ;
 			fclose( fp ) ;
@@ -880,7 +880,7 @@ void SaveDumpFile( char * filename ) {
 			}
 		fflush( fpout ) ;
 
-		fputs( "\n@@@ KiTTY RegistryBackup @@@\n\n", fpout ) ;
+		fputs( "\n@@@ ScoTTY RegistryBackup @@@\n\n", fpout ) ;
 		if( (IniFileFlag == SAVEMODE_REG)||(IniFileFlag == SAVEMODE_FILE) ) {
 			SaveRegistryKey() ;
 			if( ( fp = fopen( KittySavFile, "r" ) ) != NULL ) {

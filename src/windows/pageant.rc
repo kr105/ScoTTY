@@ -8,7 +8,7 @@
 
 #ifdef MOD_INTEGRATED_AGENT
 #define APPNAME_AGENT "Kageant"
-#define APPDESC_AGENT "KiTTY SSH authentication agent"
+#define APPDESC_AGENT "ScoTTY SSH authentication agent"
 #else
 #define APPNAME "Pageant"
 #define APPDESC "PuTTY SSH authentication agent"

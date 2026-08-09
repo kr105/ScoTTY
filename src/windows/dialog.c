@@ -277,7 +277,7 @@ static INT_PTR CALLBACK AboutProc(HWND hwnd, UINT msg,
 		CreateFileAssoc() ;
 #endif
 		
-		sprintf( buffer, "KiTTY - %s", BuildVersionTime ) ;
+		sprintf( buffer, "ScoTTY - %s", BuildVersionTime ) ;
 		SetDlgItemText(hwnd,IDA_VERSION,buffer);
         
 		str = dupprintf("About %s That's all folks !", appname);
