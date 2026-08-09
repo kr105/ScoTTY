@@ -15,8 +15,8 @@
 
 #ifdef MOD_FAR2L
 /* base64 library - needed for far2l extensions support */
-#include <../far2l/cencode.h>
-#include <../far2l/cdecode.h>
+#include <cencode.h>
+#include <cdecode.h>
 #endif
 #ifdef MOD_PERSO
 #include "charset.h"

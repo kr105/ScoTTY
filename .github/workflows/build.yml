@@ -96,7 +96,7 @@ jobs:
         run: |
           set -eux
           mkdir -p dist
-          cp build/0.76b_My_PuTTY/windows/*.exe dist/
+          cp build/src/windows/*.exe dist/
           # Sin estas dos entradas nadie puede reproducir los binarios: el sello
           # de tiempo y el commit se compilan dentro de ellos. Se publican junto
           # a los hashes para que un tercero pueda repetir el build exacto.

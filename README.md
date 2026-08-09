@@ -64,7 +64,7 @@ step and nothing to install on Windows.
     meson setup build --cross-file cross/x86_64-w64-mingw32.ini
     ninja -C build
 
-The six executables land in `build/0.76b_My_PuTTY/windows/`: `kitty.exe`,
+The six executables land in `build/src/windows/`: `kitty.exe`,
 `klink.exe`, `kscp.exe`, `ksftp.exe`, `kageant.exe` and `kittygen.exe`.
 
 The executables are self-contained: everything is linked statically, so there

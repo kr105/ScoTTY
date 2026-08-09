@@ -201,3 +201,9 @@ Cosas que solo aparecieron al compilar de verdad, y cómo se resolvieron:
 | `blocnote` parecía código muerto en el análisis de símbolos | Falso negativo: `nm` reporta `Notepad_WinMain@16` decorado y la búsqueda incluía el `@16`. `window.c:1256` sí lo llama. Se compila, con `-DNOMAIN` |
 | `notepad.rc` entra en `putty.res.o` vía `putty-common.rc2:232`, y necesitaba `res/bille.ico`, borrado en la limpieza anterior | Restaurado. La verificación de iconos se rehízo preprocesando los `.rc`, que es lo que sigue los `#include` |
 | `jpeglib.h` usa `FILE` sin incluir `<stdio.h>` | El include se movió detrás de `<stdio.h>` en `kitty_image.c` |
+
+---
+
+**Nota posterior:** las rutas de este documento son las que existían cuando se
+escribió. En un cambio posterior el árbol se reordenó a `src/`, `third_party/`
+y `src/features/`. Ver el spec de esa reestructuración.

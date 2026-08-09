@@ -12,8 +12,8 @@
 
 #ifdef MOD_FAR2L
 /* far2l extensions support - base64 encode/decode libs */
-#include <../../far2l/cencode.h>
-#include <../../far2l/cdecode.h>
+#include <cencode.h>
+#include <cdecode.h>
 #endif
 
 #ifdef __WINE__
@@ -261,14 +261,14 @@ void SaveDump( void ) ;
 #include <process.h>
 #include <math.h>
 extern HWND MainHwnd ;
-#include "../../kitty.h"
-#include "../../kitty_commun.h"
-#include "../../kitty_crypt.h"
-#include "../../kitty_launcher.h"
-#include "../../kitty_registry.h"
-#include "../../kitty_ssh.h"
-#include "../../kitty_tools.h"
-#include "../../kitty_win.h"
+#include "kitty.h"
+#include "kitty_commun.h"
+#include "kitty_crypt.h"
+#include "kitty_launcher.h"
+#include "kitty_registry.h"
+#include "kitty_ssh.h"
+#include "kitty_tools.h"
+#include "kitty_win.h"
 extern int PuttyFlag ;
 int GetCursorType() { return cursor_type ; }
 void SetCursorType( const int ct ) { cursor_type = ct ; }
@@ -453,7 +453,7 @@ int WINAPI Agent_WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int show
 #include <wtsapi32.h>
 #endif
 #if (defined MOD_BACKGROUNDIMAGE) && (!defined FLJ)
-#include "../../kitty_image.h"
+#include "kitty_image.h"
 #endif
 #ifdef MOD_RECONNECT
 static time_t last_reconnect = 0;
@@ -9055,4 +9055,4 @@ static bool win_seat_get_window_pixel_size(Seat *seat, int *x, int *y)
     return true;
 }
 
-#include "../../kitty_light.c"
+#include "kitty_light.c"

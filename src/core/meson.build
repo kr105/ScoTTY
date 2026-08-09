@@ -1,5 +1,5 @@
-# Núcleo de PuTTY. Las fuentes concretas de cada binario se declaran en
-# windows/meson.build, junto a los ejecutables que las consumen.
+# Núcleo de PuTTY. Solo genera version.h; las fuentes de cada binario se
+# declaran en src/windows/meson.build, junto a los ejecutables que las usan.
 
 version_conf = configuration_data()
 version_conf.set('RELEASE', version_major)
@@ -14,5 +14,3 @@ version_h = configure_file(
   output: 'version.h',
   configuration: version_conf,
 )
-
-subdir('windows')

@@ -1248,7 +1248,7 @@ void CountUp( void ) {
 		}
 	}
 
-#include "../../kitty_help.h"
+#include "kitty_help.h"
 char * GetHelpMessage(void) {
 	return default_help_file_content ;
 }

@@ -3,7 +3,7 @@
 #   meson setup build --cross-file cross/x86_64-w64-mingw32.ini
 #   ninja -C build
 #
-# Reemplaza a 0.76b_My_PuTTY/windows/MAKEFILE.MINGW (2443 líneas, 290 reglas
+# Reemplaza a src/windows/MAKEFILE.MINGW (2443 líneas, 290 reglas
 # .o con listas de headers mantenidas a mano y ya desincronizadas).
 #
 # Ver docs/superpowers/specs/2026-08-06-meson-reproducible-build-design.md
@@ -182,21 +182,26 @@ add_project_arguments(
 
 putty_inc = include_directories(
   '.',
-  'blocnote',
-  'far2l',
-  '0.76b_My_PuTTY',
-  '0.76b_My_PuTTY/charset',
-  '0.76b_My_PuTTY/crypto',
-  '0.76b_My_PuTTY/proxy',
-  '0.76b_My_PuTTY/ssh',
-  '0.76b_My_PuTTY/terminal',
-  '0.76b_My_PuTTY/unix',
-  '0.76b_My_PuTTY/utils',
-  '0.76b_My_PuTTY/windows',
-  'base64',
-  'bcrypt',
-  'rutty',
-  'url',
+  # El árbol de PuTTY se incluye a sí mismo con rutas tipo "ssh/signal-list.h"
+  # o "windows/platform.h", relativas a su propia raíz. Antes esa raíz era
+  # 0.76b_My_PuTTY/; ahora es src/.
+  'src',
+  'src/core',
+  'src/charset',
+  'src/crypto',
+  'src/proxy',
+  'src/ssh',
+  'src/terminal',
+  'src/unix',
+  'src/utils',
+  'src/windows',
+  'src/scotty',
+  'src/features/blocnote',
+  'src/features/far2l',
+  'src/features/rutty',
+  'src/features/url',
+  'third_party/base64',
+  'third_party/bcrypt',
 )
 
 ################################################################################
@@ -234,10 +239,10 @@ endforeach
 # Antes se enlazaban como .a precompilados sin reglas para regenerarlos.
 # Ahora se compilan desde sus fuentes en cada build.
 
-subdir('base64')
-subdir('bcrypt')
-subdir('blocnote')
-subdir('mini')
+subdir('third_party/base64')
+subdir('third_party/bcrypt')
+subdir('src/features/blocnote')
+subdir('third_party/mini')
 
 # md5/ no se compila. El makefile lo enlazaba, pero sus dos únicos símbolos,
 # CheckMD5Integrity y PrintConsole, no se llaman desde ningún sitio. Al ser una
@@ -255,7 +260,7 @@ gen_text_header = find_program('tools/gen-text-header.py')
 
 kitty_ini_h = custom_target(
   'kitty_ini.h',
-  input: 'kitty_ini.txt',
+  input: 'src/scotty/kitty_ini.txt',
   output: 'kitty_ini.h',
   command: [
     gen_text_header, '@INPUT@', '@OUTPUT@',
@@ -284,7 +289,8 @@ kitty_help_h = custom_target(
 # PuTTY y los ejecutables
 ################################################################################
 
-subdir('0.76b_My_PuTTY')
+subdir('src/core')     # genera version.h
+subdir('src/windows')  # los seis ejecutables
 
 if get_option('tests')
   subdir('test')

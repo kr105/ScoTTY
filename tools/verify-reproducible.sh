@@ -31,7 +31,7 @@ build_once() {
         env "$@" meson setup "$out/build" --cross-file "$cross" >"$out/setup.log" 2>&1
         env "$@" ninja -C "$out/build" >"$out/build.log" 2>&1
     ) || { echo "la compilación '$tag' falló; mira $out/*.log"; exit 1; }
-    find "$out/build/0.76b_My_PuTTY/windows" -maxdepth 1 -name '*.exe' -print0 \
+    find "$out/build/src/windows" -maxdepth 1 -name '*.exe' -print0 \
         | sort -z | xargs -0 sha256sum | sed "s#$out/build/##"
 }
 

@@ -21,8 +21,8 @@ extern int IniFileFlag ;
 // Flag permettant la gestion de l'arborscence (dossier=folder) dans le cas d'un savemode=dir
 extern int DirectoryBrowseFlag ;
 
-#include "../../kitty_crypt.c"
-#include "../../kitty_commun.h"
+#include "kitty_crypt.c"
+#include "kitty_commun.h"
 
 int get_param( const char * val ) {
 	if( !stricmp( val, "INIFILE" ) ) {return IniFileFlag ; }

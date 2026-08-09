@@ -1786,5 +1786,5 @@ void create_settings( const char * name ) {
 	free(nname) ;
 	conf_free(cfg);
 }
-#include "../kitty_settings.c"
+#include "kitty_settings.c"
 #endif
