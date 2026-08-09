@@ -425,17 +425,34 @@ int getpid(void) ;
 #if (defined MOD_PERSO) && (!defined FLJ)
 
 #ifndef INIT_SECTION
-#define INIT_SECTION "KiTTY"
+#define INIT_SECTION "ScoTTY"
 #endif
 #ifndef DEFAULT_INIT_FILE
-#define DEFAULT_INIT_FILE "kitty.ini"
+#define DEFAULT_INIT_FILE "scotty.ini"
 #endif
 #ifndef DEFAULT_SAV_FILE
-#define DEFAULT_SAV_FILE "kitty.sav"
+#define DEFAULT_SAV_FILE "scotty.sav"
 #endif
 #ifndef DEFAULT_EXE_FILE
 #define DEFAULT_EXE_FILE "kitty.exe"
 #endif
+
+/*
+ * Nombres que usaba KiTTY. ScoTTY prefiere los suyos, pero sigue reconociendo
+ * estos: quien actualice conserva su configuracion sin tener que mover nada.
+ * No se copian los ficheros a proposito; se leen donde estan, asi que volver a
+ * KiTTY sigue funcionando.
+ */
+#ifndef LEGACY_INIT_SECTION
+#define LEGACY_INIT_SECTION "KiTTY"
+#endif
+#ifndef LEGACY_INIT_FILE
+#define LEGACY_INIT_FILE "kitty.ini"
+#endif
+#ifndef LEGACY_SAV_FILE
+#define LEGACY_SAV_FILE "kitty.sav"
+#endif
+
 
 #else
 

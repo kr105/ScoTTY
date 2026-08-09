@@ -168,6 +168,40 @@ int ReadParameterLight( const char * key, const char * name, char * value ) {
 	return strcmp( buffer, "" ) ;
 	}
 
+/*
+ * Lee de un .ini los tres ajustes que deciden el modo de guardado. El bloque
+ * era identico en cada rama de LoadParametersLight (una por cada origen de
+ * configuracion reconocido: $KITTY_INI_FILE, scotty.ini, kitty.ini, putty.ini),
+ * asi que se factoriza aqui en vez de repetirlo una cuarta vez.
+ *
+ * ret pasa a 1 si el modo es "dir", que es lo que el llamante devuelve.
+ */
+static void LoadIniFileLight( const char * inifile, const char * section, int * ret ) {
+	char buffer[4096] ;
+
+	if( readINI( inifile, section, "savemode", buffer ) ) {
+		while( (strlen(buffer)>0) && ( (buffer[strlen(buffer)-1]=='\n')||(buffer[strlen(buffer)-1]=='\r')
+			||(buffer[strlen(buffer)-1]==' ')||(buffer[strlen(buffer)-1]=='\t') ) )
+			buffer[strlen(buffer)-1]='\0';
+		if( !stricmp( buffer, "registry" ) ) IniFileFlag = SAVEMODE_REG ;
+		else if( !stricmp( buffer, "file" ) ) IniFileFlag = SAVEMODE_FILE ;
+		else if( !stricmp( buffer, "dir" ) ) { IniFileFlag = SAVEMODE_DIR ; *ret = 1 ; }
+	}
+
+	if( IniFileFlag == SAVEMODE_DIR ) {
+		if( readINI( inifile, section, "browsedirectory", buffer ) ) {
+			if( !stricmp( buffer, "NO" ) ) DirectoryBrowseFlag = 0 ;
+			else DirectoryBrowseFlag = 1 ;
+		}
+		if( readINI( inifile, section, "configdir", buffer ) ) {
+			if( strlen( buffer ) > 0 ) {
+				ConfigDirectory = (char*)malloc( strlen(buffer) + 1 ) ;
+				strcpy( ConfigDirectory, buffer ) ;
+			}
+		}
+	} else DirectoryBrowseFlag = 0 ;
+}
+
 /* test if we are in portable mode by looking for putty.ini or kitty.ini in running directory */
 int LoadParametersLight( void ) {
 	FILE * fp = NULL ;
@@ -200,7 +234,13 @@ int LoadParametersLight( void ) {
 				}
 			}
 		} else  DirectoryBrowseFlag = 0 ;
+	} else if( (fp = fopen( "scotty.ini", "r" )) != NULL ) {
+		IniFile = (char*)malloc(12) ; strcpy(IniFile,"scotty.ini");
+		strcpy(INIT_SECTION,"ScoTTY");
+		fclose(fp) ;
+		LoadIniFileLight( IniFile, INIT_SECTION, &ret ) ;
 	} else if( (fp = fopen( "kitty.ini", "r" )) != NULL ) {
+		/* Configuracion de una version KiTTY: se lee tal cual, sin migrarla. */
 		IniFile = (char*)malloc(11) ; strcpy(IniFile,"kitty.ini");
 		strcpy(INIT_SECTION,"KiTTY");
 		fclose(fp ) ;

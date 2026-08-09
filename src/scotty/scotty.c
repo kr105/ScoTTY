@@ -147,17 +147,34 @@ void SetProtectFlag( const int flag ) { ProtectFlag = flag ; }
 // Definition de la section du fichier de configuration
 #if (defined MOD_PERSO) && (!defined FLJ)
 #ifndef INIT_SECTION
-#define INIT_SECTION "KiTTY"
+#define INIT_SECTION "ScoTTY"
 #endif
 #ifndef DEFAULT_INIT_FILE
-#define DEFAULT_INIT_FILE "kitty.ini"
+#define DEFAULT_INIT_FILE "scotty.ini"
 #endif
 #ifndef DEFAULT_SAV_FILE
-#define DEFAULT_SAV_FILE "kitty.sav"
+#define DEFAULT_SAV_FILE "scotty.sav"
 #endif
 #ifndef DEFAULT_EXE_FILE
 #define DEFAULT_EXE_FILE "kitty.exe"
 #endif
+
+/*
+ * Nombres que usaba KiTTY. ScoTTY prefiere los suyos, pero sigue reconociendo
+ * estos: quien actualice conserva su configuracion sin tener que mover nada.
+ * No se copian los ficheros a proposito; se leen donde estan, asi que volver a
+ * KiTTY sigue funcionando.
+ */
+#ifndef LEGACY_INIT_SECTION
+#define LEGACY_INIT_SECTION "KiTTY"
+#endif
+#ifndef LEGACY_INIT_FILE
+#define LEGACY_INIT_FILE "kitty.ini"
+#endif
+#ifndef LEGACY_SAV_FILE
+#define LEGACY_SAV_FILE "kitty.sav"
+#endif
+
 #else
 #ifndef INIT_SECTION
 #define INIT_SECTION "PuTTY"
@@ -5488,10 +5505,18 @@ void InitNameConfigFile( void ) {
 	if( !existfile( buffer ) ) {
 		sprintf( buffer, "%s\\%s", InitialDirectory, DEFAULT_INIT_FILE ) ;
 		if( !existfile( buffer ) ) {
+			/* Configuracion dejada por una version KiTTY: se usa donde esta. */
+			sprintf( buffer, "%s\\%s", InitialDirectory, LEGACY_INIT_FILE ) ;
+		}
+		if( !existfile( buffer ) ) {
 			sprintf( buffer, "%s\\putty.ini", InitialDirectory ) ;
 			if( !existfile( buffer ) ) {
 				if( IniFileFlag != SAVEMODE_DIR ) {
 					sprintf( buffer, "%s\\%s\\%s", getenv("APPDATA"), INIT_SECTION, DEFAULT_INIT_FILE ) ;
+					if( !existfile( buffer ) ) {
+						/* %APPDATA%\KiTTY\kitty.ini de una version anterior. */
+						sprintf( buffer, "%s\\%s\\%s", getenv("APPDATA"), LEGACY_INIT_SECTION, LEGACY_INIT_FILE ) ;
+					}
 					if( !existfile( buffer ) ) {
 						sprintf( buffer, "%s\\%s", getenv("APPDATA"), INIT_SECTION ) ;
 						CreateDirectory( buffer, NULL ) ;
@@ -5509,8 +5534,16 @@ void InitNameConfigFile( void ) {
 	KittySavFile=NULL ;
 	sprintf( buffer, "%s\\%s", InitialDirectory, DEFAULT_SAV_FILE ) ;
 	if( !existfile( buffer ) ) {
+		/* kitty.sav dejado por una version anterior, junto al ejecutable. */
+		sprintf( buffer, "%s\\%s", InitialDirectory, LEGACY_SAV_FILE ) ;
+	}
+	if( !existfile( buffer ) ) {
 		if( IniFileFlag != SAVEMODE_DIR ) {
 			sprintf( buffer, "%s\\%s\\%s", getenv("APPDATA"), INIT_SECTION, DEFAULT_SAV_FILE ) ;
+			if( !existfile( buffer ) ) {
+				/* %APPDATA%\KiTTY\kitty.sav */
+				sprintf( buffer, "%s\\%s\\%s", getenv("APPDATA"), LEGACY_INIT_SECTION, LEGACY_SAV_FILE ) ;
+			}
 			if( !existfile( buffer ) ) {
 				sprintf( buffer, "%s\\%s", getenv("APPDATA"), INIT_SECTION ) ;
 				CreateDirectory( buffer, NULL ) ;
