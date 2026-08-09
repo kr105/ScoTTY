@@ -1286,7 +1286,7 @@ void load_open_settings(settings_r *sesskey, Conf *conf)
     gppi(sesskey, "LocalEcho", AUTO, conf, CONF_localecho);
     gppi(sesskey, "LocalEdit", AUTO, conf, CONF_localedit);
 #if (defined MOD_PERSO) && (!defined FLJ)
-    gpps(sesskey, "Answerback", "KiTTY", conf, CONF_answerback);
+    gpps(sesskey, "Answerback", "ScoTTY", conf, CONF_answerback);
 #else
     gpps(sesskey, "Answerback", "PuTTY", conf, CONF_answerback);
 #endif

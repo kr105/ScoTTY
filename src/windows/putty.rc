@@ -92,7 +92,7 @@ IDI_CFGICON ICON "puttycfg.ico"
 
 #ifdef MOD_PERSO
 #ifndef NO_MANIFESTS
-1 RT_MANIFEST "kitty.mft"
+1 RT_MANIFEST "scotty.mft"
 #endif /* NO_MANIFESTS */
 #else
 #ifndef NO_MANIFESTS

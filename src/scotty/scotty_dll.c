@@ -11,6 +11,6 @@
 #endif
 
 extern "C" const char * get_param_str( const char * val ) {
-	if( !stricmp( val, "CLASS" ) ) return "KiTTY" ;
+	if( !stricmp( val, "CLASS" ) ) return "ScoTTY" ;
 	return NULL ;
 	}

@@ -750,7 +750,7 @@ void load_open_settings_forced(char *filename, Conf *conf) {
     gppi_forced(sesskey, "LocalEcho", AUTO, conf, CONF_localecho);
     gppi_forced(sesskey, "LocalEdit", AUTO, conf, CONF_localedit);
 #if (defined MOD_PERSO) && (!defined FLJ)
-    gpps_forced(sesskey, "Answerback", "KiTTY", conf, CONF_answerback);
+    gpps_forced(sesskey, "Answerback", "ScoTTY", conf, CONF_answerback);
 #else
     gpps_forced(sesskey, "Answerback", "PuTTY", conf, CONF_answerback);
 #endif

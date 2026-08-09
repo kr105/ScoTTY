@@ -42,11 +42,11 @@ BEGIN
 	BLOCK "080904B0"
 	BEGIN
 #ifdef MOD_PERSO
-	    VALUE "CompanyName",	"9bis.com"  /* required :/ */
-	    VALUE "ProductName",	"KiTTY"
+	    VALUE "CompanyName",	"ScoTTY project"  /* required :/ */
+	    VALUE "ProductName",	"ScoTTY"
 	    VALUE "FileDescription",	APPDESC
 	    VALUE "InternalName",	APPNAME
-	    VALUE "OriginalFilename",	"KiTTY"
+	    VALUE "OriginalFilename",	"ScoTTY"
 #else
 	    VALUE "CompanyName",	"Simon Tatham"  /* required :/ */
 	    VALUE "ProductName",	"PuTTY suite"
@@ -63,7 +63,7 @@ BEGIN
 	    VALUE "FileVersion",	TEXTVER
 #endif
 #if (defined MOD_PERSO) && (!defined FLJ)
-		VALUE "ProductVersion",	TEXTVER " - Additional features on KiTTY That's all folks! by 9bis.com, 2005-2023"
+		VALUE "ProductVersion",	TEXTVER " - ScoTTY, fork of KiTTY by 9bis.com, 2005-2023"
 #else
 	    VALUE "ProductVersion",	TEXTVER
 #endif

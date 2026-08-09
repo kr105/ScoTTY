@@ -6,7 +6,7 @@
 <assemblyIdentity
    version="0.0.0.0"
    processorArchitecture="*"
-   name="KiTTY"
+   name="ScoTTY"
    type="win32" />
    <description>A network client and terminal emulator</description>
    <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

@@ -668,7 +668,7 @@ int WINAPI Launcher_WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmdline, int s
 	char className[1024] = "KiTTYLauncher" ;
 	
 	if( strcmp(KiTTYClassName,appname) ) { strcpy(className,KiTTYClassName) ; }
-	else if( strcmp(KiTTYClassName,"KiTTY") ) { strcpy(className,KiTTYClassName) ; }
+	else if( strcmp(KiTTYClassName,"ScoTTY") ) { strcpy(className,KiTTYClassName) ; }
 	if( ReadParameter( "Launcher", "classname", buffer ) ) {
 		buffer[1023]='\0' ;
 		if( strlen(buffer)>0 ) { strcpy(className,buffer) ; }

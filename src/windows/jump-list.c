@@ -736,7 +736,7 @@ bool set_explicit_app_user_model_id(void)
     if (p_SetCurrentProcessExplicitAppUserModelID)
     {
 #ifdef MOD_PERSO
-        if (p_SetCurrentProcessExplicitAppUserModelID(L"9bis.com.KiTTY") == S_OK)
+        if (p_SetCurrentProcessExplicitAppUserModelID(L"ScoTTY") == S_OK)
 #else
         if (p_SetCurrentProcessExplicitAppUserModelID(L"SimonTatham.PuTTY") == S_OK)
 #endif

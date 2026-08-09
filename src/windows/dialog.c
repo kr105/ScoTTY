@@ -243,7 +243,12 @@ static INT_PTR CALLBACK LicenceProc(HWND hwnd, UINT msg,
 #if (defined MOD_PERSO) && (!defined FLJ)
 
 //static const char MESSAGE[] = "";
-static const char MESSAGE[] = "                                                                                           KiTTY software is developed by Cyd for 9bis.com, copyright \251 2005-2023, thanks to Leo for bcrypt and mini libraries, thanks to all contributors                                                                                       " ;
+/*
+ * Creditos del Acerca de. ScoTTY es un fork, asi que la atribucion a los
+ * autores anteriores se conserva: quitarla seria incorrecto por licencia y
+ * por respeto a su trabajo. Solo cambia la identidad del producto.
+ */
+static const char MESSAGE[] = "                                                                                           ScoTTY is a fork of KiTTY, developed by Cyd for 9bis.com, copyright \251 2005-2023, itself a fork of PuTTY by Simon Tatham. Thanks to Leo for the bcrypt and mini libraries, and to all contributors                                                                                       " ;
 
 static INT_PTR CALLBACK AboutProc(HWND hwnd, UINT msg,
                                   WPARAM wParam, LPARAM lParam)
@@ -407,7 +412,9 @@ static INT_PTR CALLBACK AboutProc(HWND hwnd, UINT msg,
 		if (capture_email || capture_webpage) {
 			ReleaseCapture();
 			if (dwId == IDC_EMAIL && capture_email) {
-				ShellExecute(hwnd,"open","mailto:kitty@9bis.com",NULL,NULL,SW_SHOWNORMAL);
+				/* Los informes de ScoTTY van a su propio repositorio: enviarlos a la
+   direccion de KiTTY cargaria a su mantenedor con bugs que no son suyos. */
+				ShellExecute(hwnd,"open","https://github.com/kr105/ScoTTY/issues",NULL,NULL,SW_SHOWNORMAL);
 				}
 			else if (dwId == IDC_WEBPAGE && capture_webpage) {
 				ShellExecute(hwnd,"open","https://www.9bis.net/kitty",NULL,NULL,SW_SHOWNORMAL);

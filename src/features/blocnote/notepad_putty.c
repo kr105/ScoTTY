@@ -9,7 +9,7 @@ void TestIfParentIsKiTTY( void ) {
 	ParentWindow = GetForegroundWindow() ;
 	char buffer[256] ;
 	GetClassName( ParentWindow, buffer, 256 ) ;
-	if( strcmp( buffer, "KiTTY" ) && strcmp( buffer, "PuTTY" ) ) ParentWindow = NULL ;
+	if( strcmp( buffer, "ScoTTY" ) && strcmp( buffer, "PuTTY" ) ) ParentWindow = NULL ;
 		//SendMessage(ParentWindow, WM_CHAR, buffer[i], 0) ; 
 	}
 

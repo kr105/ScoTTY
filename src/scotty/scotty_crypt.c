@@ -14,6 +14,13 @@ int decryptstring( const int mode, char * st, const char * key ) {
 	return res ;
 	}
 
+/*
+ * Deriva la clave con la que se ofusca la contrasena guardada.
+ *
+ * El literal "KiTTY" que aparece abajo NO es naming pendiente de renombrar: es
+ * material de clave. Cambiarlo volveria ilegible cualquier contrasena cifrada
+ * con el, asi que se deja como esta.
+ */
 void dopasskey( int mode, char * passkey, const char * host, const char * termtype ) {
     if( mode > 0 ) {
 	strcpy( passkey, "KiTTY" ) ;
