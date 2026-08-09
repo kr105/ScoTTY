@@ -48,7 +48,16 @@ case "$field" in
             || TZ=UTC date -u -r "$epoch" +'%d/%m/%Y-%H:%M:%S(UTC)'
         ;;
     commit)
-        git -C "$(dirname "$0")/.." rev-parse --short=10 HEAD 2>/dev/null || printf 'unavailable'
+        # Igual que la marca de tiempo: la variable de entorno manda sobre git.
+        # Sin esto, el commit se toma del repositorio y quien compile desde un
+        # tarball sin .git obtiene 'unavailable', o sea un binario distinto al
+        # que publica el CI. Declararlo como entrada lo hace reproducible.
+        if [ -n "${SOURCE_COMMIT:-}" ]; then
+            printf '%s' "$SOURCE_COMMIT"
+        else
+            git -C "$(dirname "$0")/.." rev-parse --short=10 HEAD 2>/dev/null \
+                || printf 'unavailable'
+        fi
         ;;
     *)
         echo "uso: $0 [--epoch=N] {epoch|time|commit}" >&2

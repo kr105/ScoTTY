@@ -35,11 +35,25 @@ build_once() {
         | sort -z | xargs -0 sha256sum | sed "s#$out/build/##"
 }
 
+# SOURCE_DATE_EPOCH y SOURCE_COMMIT son entradas del build, no cosas que deban
+# variar entre las dos compilaciones: se fijan aquí, iguales para ambas.
+#
+# Antes se dejaban al ambiente y la compilación B, que usa otro HOME, perdía el
+# acceso a git —safe.directory vive en $HOME/.gitconfig— y caía a los valores
+# por defecto. Los binarios diferían por eso y no por un problema real.
+export SOURCE_DATE_EPOCH="$("$root/tools/build-stamp.sh" epoch)"
+export SOURCE_COMMIT="$("$root/tools/build-stamp.sh" commit)"
+echo "entradas fijadas: SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH SOURCE_COMMIT=$SOURCE_COMMIT"
+echo
+
 echo "compilación A..."
-a=$(build_once a 0022 TZ=UTC LC_ALL=C TERM=dumb)
+a=$(build_once a 0022 TZ=UTC LC_ALL=C TERM=dumb \
+      SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH" SOURCE_COMMIT="$SOURCE_COMMIT")
 
 echo "compilación B (otra ruta, otra TZ, otra umask, otro entorno)..."
-b=$(build_once b 0077 TZ=Pacific/Kiritimati LC_ALL=C.UTF-8 TERM=xterm-256color HOME="$work/fakehome")
+b=$(build_once b 0077 TZ=Pacific/Kiritimati LC_ALL=C.UTF-8 TERM=xterm-256color \
+      HOME="$work/fakehome" \
+      SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH" SOURCE_COMMIT="$SOURCE_COMMIT")
 
 echo
 if [ "$a" = "$b" ]; then

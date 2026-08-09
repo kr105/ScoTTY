@@ -92,13 +92,23 @@ jobs:
         # así que compilar dejaba el repositorio modificado. Esto lo impide.
         run: git diff --exit-code
 
-      - name: recoger artefactos y hashes
+      - name: recoger artefactos, hashes y entradas del build
         run: |
           set -eux
           mkdir -p dist
           cp build/0.76b_My_PuTTY/windows/*.exe dist/
+          # Sin estas dos entradas nadie puede reproducir los binarios: el sello
+          # de tiempo y el commit se compilan dentro de ellos. Se publican junto
+          # a los hashes para que un tercero pueda repetir el build exacto.
+          {
+            printf 'SOURCE_DATE_EPOCH=%s\n' "$(tools/build-stamp.sh epoch)"
+            printf 'SOURCE_COMMIT=%s\n'     "$(tools/build-stamp.sh commit)"
+            printf 'DEBIAN_SNAPSHOT=%s\n'   "$DEBIAN_SNAPSHOT"
+            printf 'DEBIAN_IMAGE=%s\n'      "$DEBIAN_IMAGE"
+          } > dist/BUILD-INPUTS
           cd dist
           sha256sum *.exe | tee SHA256SUMS
+          cat BUILD-INPUTS
 
       - uses: actions/upload-artifact@v4
         with:
